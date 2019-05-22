@@ -1,0 +1,554 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>Javascript模块化 | RainBow&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Xiaoyueyue">
+    
+
+    
+    <meta name="description" content="Javascript 模块化前言此篇文章研究怎样合理组织代码结构，如写业务代码，写原生组件等，与设计模式章节有部分重合。 模块模式（非 es6 场合常用）使用 jquery 的 getJSON 方法来获取 github repoList 数据列表，未加 loading … 1&amp;lt;div id=&quot;root&quot;&amp;gt;&amp;lt;/div&amp;gt; 1234567891011121314151617181">
+<meta name="keywords" content="Javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript模块化">
+<meta property="og:url" content="https://xiaoyueyue.org/2019/05/14/Javascript模块化/index.html">
+<meta property="og:site_name" content="RainBow&#39;s Blog">
+<meta property="og:description" content="Javascript 模块化前言此篇文章研究怎样合理组织代码结构，如写业务代码，写原生组件等，与设计模式章节有部分重合。 模块模式（非 es6 场合常用）使用 jquery 的 getJSON 方法来获取 github repoList 数据列表，未加 loading … 1&amp;lt;div id=&quot;root&quot;&amp;gt;&amp;lt;/div&amp;gt; 1234567891011121314151617181">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-21T02:06:57.009Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Javascript模块化">
+<meta name="twitter:description" content="Javascript 模块化前言此篇文章研究怎样合理组织代码结构，如写业务代码，写原生组件等，与设计模式章节有部分重合。 模块模式（非 es6 场合常用）使用 jquery 的 getJSON 方法来获取 github repoList 数据列表，未加 loading … 1&amp;lt;div id=&quot;root&quot;&amp;gt;&amp;lt;/div&amp;gt; 1234567891011121314151617181">
+<meta name="twitter:creator" content="@yanyueyou">
+
+    
+    <link rel="alternative" href="/atom.xml" title="RainBow&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.jpg" alt="RainBow&#39;s Blog" title="RainBow&#39;s Blog"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="RainBow&#39;s Blog">RainBow&#39;s Blog</a></h1>
+				<h2 class="blog-motto">余则缊袍敝衣处其间，略无慕艳意。以中有足乐者，不知口体之奉不若人也！</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/todolist">TodoList</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
+						<input type="hidden" name="q" value="site:xiaoyueyue.org">
+					</form>
+					
+					</li>
+				</ul>
+			</ul></nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/05/14/Javascript模块化/" title="Javascript模块化" itemprop="url">Javascript模块化</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Xiaoyueyue" target="_blank" itemprop="author">Xiaoyueyue</a>
+		
+  </p><p class="article-time">
+    <time datetime="2019-05-14T05:49:06.721Z" itemprop="datePublished"> 发表于 2019-05-14 13:49:06</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Javascript-模块化"><span class="toc-number">1.</span> <span class="toc-text">Javascript 模块化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块模式（非-es6-场合常用）"><span class="toc-number">1.2.</span> <span class="toc-text">模块模式（非 es6 场合常用）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件结构"><span class="toc-number">1.3.</span> <span class="toc-text">文件结构</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="Javascript-模块化"><a href="#Javascript-模块化" class="headerlink" title="Javascript 模块化"></a>Javascript 模块化</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>此篇文章研究怎样合理组织代码结构，如写业务代码，写原生组件等，与设计模式章节有部分重合。</p>
+<h2 id="模块模式（非-es6-场合常用）"><a href="#模块模式（非-es6-场合常用）" class="headerlink" title="模块模式（非 es6 场合常用）"></a>模块模式（非 es6 场合常用）</h2><p>使用 <code>jquery</code> 的 <strong>getJSON</strong> 方法来获取 github repoList 数据列表，未加 loading …</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Module = &#123;</span><br><span class="line">  init: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> y = <span class="keyword">this</span>;</span><br><span class="line">    y.id = <span class="string">"root"</span>;</span><br><span class="line">    y.error = <span class="literal">null</span>;</span><br><span class="line">    y.fetchOrderList(); <span class="comment">// 若有可以扩展添加结束处理的逻辑</span></span><br><span class="line">  &#125;,</span><br><span class="line">  fetchOrderList: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> y = <span class="keyword">this</span>;</span><br><span class="line">    $.getJSON(</span><br><span class="line">      <span class="string">"https://api.github.com/search/repositories?q=javascript&amp;sort=stars"</span></span><br><span class="line">    ).then(</span><br><span class="line">      value =&gt; &#123;</span><br><span class="line">        y.render(value);</span><br><span class="line">      &#125;,</span><br><span class="line">      error =&gt; &#123;</span><br><span class="line">        y.error = error; <span class="comment">// 错误标记</span></span><br><span class="line">        y._fetchDataFailed(error);</span><br><span class="line">      &#125;</span><br><span class="line">    );</span><br><span class="line">  &#125;,</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> y = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">let</span> html;</span><br><span class="line">    <span class="keyword">if</span> (y.error === <span class="literal">null</span>) &#123;</span><br><span class="line">      html = <span class="keyword">this</span>._resolveData(data);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      html = data;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">document</span>.getElementById(y.id).innerHTML = html;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 需要时格式化处理</span></span><br><span class="line">  _resolveData: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> repos = data.items;</span><br><span class="line">    <span class="keyword">var</span> repoList = repos.map(<span class="function"><span class="keyword">function</span>(<span class="params">repo, index</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="string">`&lt;li&gt; &lt;a href=<span class="subst">$&#123;</span></span></span><br><span class="line"><span class="string"><span class="subst">        repo.html_url</span></span></span><br><span class="line"><span class="string"><span class="subst">      &#125;</span>&gt;<span class="subst">$&#123;repo.name&#125;</span>&lt;/a&gt; (<span class="subst">$&#123;repo.stargazers_count&#125;</span> stars) &lt;br /&gt; <span class="subst">$&#123;repo.description&#125;</span>&lt;/li&gt;`</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`&lt;main&gt;</span></span><br><span class="line"><span class="string">            &lt;h1&gt;Most Popular JavaScript Projects in Github&lt;/h1&gt;</span></span><br><span class="line"><span class="string">            &lt;ol&gt; <span class="subst">$&#123;repoList.join(<span class="string">""</span>)&#125;</span>&lt;/ol&gt;</span></span><br><span class="line"><span class="string">              &lt;/main&gt; `</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 错误处理</span></span><br><span class="line">  _fetchDataFailed: <span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> errorHtml = <span class="string">`&lt;span&gt;Error: <span class="subst">$&#123;error.message&#125;</span>&lt;/span&gt;`</span>;</span><br><span class="line">    <span class="keyword">this</span>.render(errorHtml);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">Module.init();</span><br></pre></td></tr></table></figure>
+<h2 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">assets      <span class="comment"># 静态资源</span></span><br><span class="line">api         <span class="comment"># 接口地址</span></span><br><span class="line">environment <span class="comment"># 环境切换</span></span><br><span class="line">mock        <span class="comment"># 本地模拟数据</span></span><br><span class="line">components  <span class="comment"># 组件库</span></span><br><span class="line">layouts     <span class="comment"># 布局库</span></span><br><span class="line">styles      <span class="comment"># 全局公共分类样式</span></span><br><span class="line">views       <span class="comment"># 页面</span></span><br><span class="line">utils       <span class="comment"># 方法</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以省略</span></span><br><span class="line">libs        <span class="comment"># 第三方SDK</span></span><br><span class="line">routes      <span class="comment"># 路由管理</span></span><br><span class="line">store       <span class="comment"># 状态管理</span></span><br></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Javascript/">Javascript</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://xiaoyueyue.org/2019/05/14/Javascript模块化/" data-title="Javascript模块化 | RainBow&#39;s Blog" data-tsina class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2019/05/14/Css预处理器之-Sass/" title="Css预处理器之-Sass">
+  <strong>上一篇：</strong><br>
+  <span>
+  Css预处理器之-Sass</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/05/14/IE兼容性/" title="IE 兼容性">
+ <strong>下一篇：</strong><br> 
+ <span>IE 兼容性
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Javascript-模块化"><span class="toc-number">1.</span> <span class="toc-text">Javascript 模块化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块模式（非-es6-场合常用）"><span class="toc-number">1.2.</span> <span class="toc-text">模块模式（非 es6 场合常用）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件结构"><span class="toc-number">1.3.</span> <span class="toc-text">文件结构</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="xiaoyueyue165" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Javascript/" title="Javascript">Javascript<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/开发者笔记/" title="开发者笔记">开发者笔记<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Css/" title="Css">Css<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/拥抱开源/" title="拥抱开源">拥抱开源<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Interview/" title="Interview">Interview<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/React/" title="React">React<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/理解计算机/" title="理解计算机">理解计算机<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/观点与感想/" title="观点与感想">观点与感想<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">关注博客</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank" title="阮一峰的网络日志">阮一峰的网络日志</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.barretlee.com/entry/" target="_blank" title="小胡子哥的博客">小胡子哥的博客</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">关注唱吧</p>
+    <ul>
+        
+          <li class="changba_li">
+            
+            <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/874670453_200_200.jpg">
+            
+            
+            	<a class="changba_a" href="http://changba.com/u/104571671" target="_blank" title="琳琳abcdefg">琳琳abcdefg</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+              <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/463875924_200_200.jpg">
+            
+            
+            	<a class="changba_a" href="http://changba.com/u/193189028" target="_blank" title="Vesp3r">Vesp3r</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+               <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/880681979_200_200.jpg">
+             
+            
+            	<a class="changba_a" href="http://changba.com/u/21968651" target="_blank" title="大崇崇Zebra">大崇崇Zebra</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+                  <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/448860018_200_200.jpg">
+             
+            
+            	<a class="changba_a" href="http://changba.com/u/39302742" target="_blank" title="基督徒小越越">基督徒小越越</a>
+            
+          </image></li>
+        
+    </ul>
+</div>
+
+
+  
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m a Front-end developer. <br>
+			This is my blog,and my life is brilliant.</p>
+	</section>
+	 
+	<div class="social-font">
+		
+		
+		<a href="https://github.com/xiaoyueyue165" target="_blank" class="icon-github" title="github"></a>
+    
+    
+      <a href="http://changba.com/u/39302742" target="_blank" class="icon-changba" title="changba"></a>
+      
+		
+		
+		<a href="https://twitter.com/yanyueyou" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:xiaoyueyue165@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019
+		
+		<a href="/about" target="_blank" title="Xiaoyueyue">Xiaoyueyue</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

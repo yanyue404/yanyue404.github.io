@@ -1,0 +1,669 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>深入bootstrap响应式布局 | RainBow&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Xiaoyueyue">
+    
+
+    
+    <meta name="description" content="前言bootstrap 响应式布局用的不熟，在网上找了现成的 bootstrap 响应单页很多，在这里通过分析一个bootstrap中文网主页的响应来分析响应式布局的原理，从此畅通，以后专注写 media… 前往：Bootstrap 中文网 视口获取 viewport 的大小(布局视口) 获取 layout viewport 12document.documentElement.clientWid">
+<meta name="keywords" content="Css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入bootstrap响应式布局">
+<meta property="og:url" content="https://xiaoyueyue.org/2019/05/14/深入bootstrap响应式布局/index.html">
+<meta property="og:site_name" content="RainBow&#39;s Blog">
+<meta property="og:description" content="前言bootstrap 响应式布局用的不熟，在网上找了现成的 bootstrap 响应单页很多，在这里通过分析一个bootstrap中文网主页的响应来分析响应式布局的原理，从此畅通，以后专注写 media… 前往：Bootstrap 中文网 视口获取 viewport 的大小(布局视口) 获取 layout viewport 12document.documentElement.clientWid">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-21T02:06:57.057Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入bootstrap响应式布局">
+<meta name="twitter:description" content="前言bootstrap 响应式布局用的不熟，在网上找了现成的 bootstrap 响应单页很多，在这里通过分析一个bootstrap中文网主页的响应来分析响应式布局的原理，从此畅通，以后专注写 media… 前往：Bootstrap 中文网 视口获取 viewport 的大小(布局视口) 获取 layout viewport 12document.documentElement.clientWid">
+<meta name="twitter:creator" content="@yanyueyou">
+
+    
+    <link rel="alternative" href="/atom.xml" title="RainBow&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.jpg" alt="RainBow&#39;s Blog" title="RainBow&#39;s Blog"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="RainBow&#39;s Blog">RainBow&#39;s Blog</a></h1>
+				<h2 class="blog-motto">余则缊袍敝衣处其间，略无慕艳意。以中有足乐者，不知口体之奉不若人也！</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/todolist">TodoList</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
+						<input type="hidden" name="q" value="site:xiaoyueyue.org">
+					</form>
+					
+					</li>
+				</ul>
+			</ul></nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/05/14/深入bootstrap响应式布局/" title="深入bootstrap响应式布局" itemprop="url">深入bootstrap响应式布局</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Xiaoyueyue" target="_blank" itemprop="author">Xiaoyueyue</a>
+		
+  </p><p class="article-time">
+    <time datetime="2019-05-14T05:49:06.750Z" itemprop="datePublished"> 发表于 2019-05-14 13:49:06</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#视口"><span class="toc-number">2.</span> <span class="toc-text">视口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#屏幕适配"><span class="toc-number">2.1.</span> <span class="toc-text">屏幕适配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#媒体查询"><span class="toc-number">3.</span> <span class="toc-text">媒体查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bootstrap-的响应源码"><span class="toc-number">4.</span> <span class="toc-text">Bootstrap 的响应源码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#container"><span class="toc-number">4.1.</span> <span class="toc-text">container</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#display"><span class="toc-number">4.2.</span> <span class="toc-text">display</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Response-分析"><span class="toc-number">5.</span> <span class="toc-text">Response 分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#header"><span class="toc-number">5.1.</span> <span class="toc-text">header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#masthead-报头"><span class="toc-number">5.2.</span> <span class="toc-text">masthead 报头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#social-社交"><span class="toc-number">5.3.</span> <span class="toc-text">social 社交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#projects"><span class="toc-number">5.4.</span> <span class="toc-text">projects</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#header-1"><span class="toc-number">5.4.1.</span> <span class="toc-text">header</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#projects-区域"><span class="toc-number">5.4.2.</span> <span class="toc-text">projects 区域</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#footer"><span class="toc-number">5.5.</span> <span class="toc-text">footer</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>bootstrap 响应式布局用的不熟，在网上找了现成的 bootstrap 响应单页很多，在这里通过分析一个<code>bootstrap中文网主页</code>的响应来分析响应式布局的原理，从此畅通，以后专注写 media…</p>
+<p>前往：<a href="http://www.bootcss.com/" target="_blank" rel="noopener">Bootstrap 中文网</a></p>
+<h2 id="视口"><a href="#视口" class="headerlink" title="视口"></a>视口</h2><p>获取 viewport 的大小(布局视口)</p>
+<p><strong>获取 layout viewport</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.documentElement.clientWidth;</span><br><span class="line"><span class="built_in">document</span>.documentElement.clientHeight;</span><br></pre></td></tr></table></figure>
+<p><strong>ideal viewport（理想视口）设备屏幕区域</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取ideal viewport有两种情形</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 新设备</span></span><br><span class="line"><span class="built_in">window</span>.screen.width;</span><br><span class="line"><span class="built_in">window</span>.screen.height;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 老设备</span></span><br><span class="line"><span class="built_in">window</span>.screen.width / <span class="built_in">window</span>.devicePixelRatio;</span><br><span class="line"><span class="built_in">window</span>.screen.height / <span class="built_in">window</span>.devicePixelRatio;</span><br></pre></td></tr></table></figure>
+<p>移动设备厂商认为将网页完整显示给用户才最合理，而不该出现滚动条，所以就将 layout viewport 进行了缩放，使其恰好完整显示在 ideal viewport（屏幕）里，其缩放比例为 ideal viewport / layout viewport。</p>
+<h3 id="屏幕适配"><a href="#屏幕适配" class="headerlink" title="屏幕适配"></a>屏幕适配</h3><blockquote>
+<p>移动页面最理想的状态是，避免滚动条且不被默认缩放处理</p>
+</blockquote>
+<blockquote>
+<p>viewport 是由苹果公司为了解决移动设备浏览器渲染页面而提出的解决方案</p>
+</blockquote>
+<ul>
+<li>控制缩放</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="媒体查询"><a href="#媒体查询" class="headerlink" title="媒体查询"></a>媒体查询</h2><p>引入方法</p>
+<ol>
+<li>link 方法</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"index.css"</span> <span class="attr">media</span>=<span class="string">"only screen and (max-width: 320px)"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>media(css 样式)</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">media</span> screen and (min-width: <span class="number">768px</span>) and (max-width: <span class="number">979px</span>) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>关键字</li>
+</ul>
+<p>关键字将媒体类型或多个媒体特性连接到一起做为媒体查询的条件。</p>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>and</td>
+<td>将多个媒体特性连接起来，相当于”且”</td>
+</tr>
+<tr>
+<td>not</td>
+<td>排除某个媒体类型，相当于”非”，可以省略</td>
+</tr>
+<tr>
+<td>only</td>
+<td>指定某个特定的媒体类型，可以省略</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>常用特性</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>width / height</td>
+<td>完全等于 layout viewport</td>
+</tr>
+<tr>
+<td>max-width / max-height</td>
+<td>小于等于 layout viewport</td>
+</tr>
+<tr>
+<td>min-width / min-height</td>
+<td>大于等于 layout viewport</td>
+</tr>
+<tr>
+<td>device-width / device-height</td>
+<td>完全等于 ideal viewport</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Bootstrap-的响应源码"><a href="#Bootstrap-的响应源码" class="headerlink" title="Bootstrap 的响应源码"></a>Bootstrap 的响应源码</h2><h3 id="container"><a href="#container" class="headerlink" title="container"></a>container</h3><p>每个布局的大容器都在使用了<code>.container</code>这个 class 类名，保证所有设备 padding 和 margin 的同时候，保证响应设备的宽度控制。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*最小设备以及公共padding与margin的控制*/</span></span><br><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">  <span class="attribute">padding-right</span>: <span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">padding-left</span>: <span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">margin-right</span>: auto;</span><br><span class="line">  <span class="attribute">margin-left</span>: auto;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">media</span> (min-width: <span class="number">768px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.container</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">750px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">media</span> (min-width: <span class="number">992px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.container</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">970px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">media</span> (min-width: <span class="number">1200px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.container</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">1170px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="display"><a href="#display" class="headerlink" title="display"></a>display</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">media</span> (max-width: <span class="number">767px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.hidden-xs</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: none <span class="meta">!important</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*当尺寸大于等于768px和小于等于991px时*/</span></span><br><span class="line">@<span class="keyword">media</span> (min-width: <span class="number">768px</span>) and (max-width: <span class="number">991px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.hidden-sm</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: none <span class="meta">!important</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">@<span class="keyword">media</span> (min-width: <span class="number">992px</span>) and (max-width: <span class="number">1199px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.hidden-md</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: none <span class="meta">!important</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">@<span class="keyword">media</span> (min-width: <span class="number">1200px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.hidden-lg</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: none <span class="meta">!important</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Response-分析"><a href="#Response-分析" class="headerlink" title="Response 分析"></a>Response 分析</h2><p>以 Bootstrap 中文网为例子，进一步完善媒体查询对响应式布局的功用。</p>
+<p>我的 PC 设备是 1366x768,在这里选择<code>@media (min-width: 1200px)</code>的情况进行兼容，匹配 PC 设备</p>
+<h3 id="header"><a href="#header" class="headerlink" title="header"></a>header</h3><ol>
+<li>使用<code>hidden-sm hidden-md</code>两个 class 类控制，当屏幕尺寸大于 768px 和小于等于 1119 时候,隐藏<strong>Bootstrap2 中文文档</strong>。</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">media</span> (min-width: <span class="number">992px</span>) and (max-width: <span class="number">1199px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.hidden-md</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: none <span class="meta">!important</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">@<span class="keyword">media</span> (min-width: <span class="number">768px</span>) and (max-width: <span class="number">991px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.hidden-sm</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: none <span class="meta">!important</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"hidden-sm hidden-md"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://v2.bootcss.com/"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>Bootstrap2中文文档<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>当屏幕尺寸大于 768px 和小于等于 991px 的时，使用<code>.hidden-sm</code>控制 header 左侧的<strong>Bootstrap 中文网</strong>隐藏，控制右侧的<strong>关于</strong>隐藏。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"navbar-brand hidden-sm"</span>&gt;</span>Bootstrap中文网<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"nav navbar-nav navbar-right hidden-sm"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>&gt;</span>关于<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>当屏幕尺寸小于 768px 时,<code>nav-toggle</code>不再控制菜单的隐藏状态，显示出来，header 的各个子菜单，由<code>collapse</code>控制隐藏，同时改变了 nav 里面的 li 标签的布局方式(不设浮动)，变成树状态。</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">media</span> (min-width: <span class="number">768px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.navbar-toggle</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: none;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">@<span class="keyword">media</span> (min-width: <span class="number">768px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.navbar-collapse</span><span class="selector-class">.collapse</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: block <span class="meta">!important</span>;</span><br><span class="line">    <span class="attribute">height</span>: auto <span class="meta">!important</span>;</span><br><span class="line">    <span class="attribute">padding-bottom</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">overflow</span>: visible <span class="meta">!important</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">media</span> (min-width: <span class="number">768px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.navbar-nav</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"navbar-collapse collapse"</span> <span class="attr">role</span>=<span class="string">"navigation"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"nav navbar-nav"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"hidden-sm hidden-md"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://v2.bootcss.com/"</span>&gt;</span>Bootstrap2中文文档<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://v3.bootcss.com/"</span>&gt;</span>Bootstrap3中文文档<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"nav navbar-nav navbar-right hidden-sm"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/about/"</span>&gt;</span>关于<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="masthead-报头"><a href="#masthead-报头" class="headerlink" title="masthead 报头"></a>masthead 报头</h3><p>masthead 模块的响应主要是包含块 container 和居中<code>text-align：center</code>的结果,当然需要下面的 css 控制 h1 和 h2 的大小响应。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">media</span> screen and (min-width: <span class="number">768px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.masthead</span> &#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">90px</span> <span class="number">0</span> <span class="number">110px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.masthead</span> <span class="selector-tag">h1</span> &#123;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">60px</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1</span>;</span><br><span class="line">  <span class="attribute">letter-spacing</span>: -<span class="number">2px</span>;</span><br><span class="line">  <span class="attribute">font-weight</span>: <span class="number">700</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">media</span> screen and (min-width: <span class="number">768px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.masthead</span> <span class="selector-tag">h1</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">90px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">media</span> screen and (min-width: <span class="number">992px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.masthead</span> <span class="selector-tag">h1</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">100px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.masthead</span> <span class="selector-tag">h2</span> &#123;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">18px</span>;</span><br><span class="line">  <span class="attribute">font-weight</span>: <span class="number">200</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1.25</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">media</span> screen and (min-width: <span class="number">768px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.masthead</span> <span class="selector-tag">h2</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">24px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">media</span> screen and (min-width: <span class="number">992px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.masthead</span> <span class="selector-tag">h2</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">30px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="social-社交"><a href="#social-社交" class="headerlink" title="social 社交"></a>social 社交</h3><p>下面是布局的简化版本，主要利用了<code>text-algn:center</code>与<code>container</code>:</p>
+<p>css 样式</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">  <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.text-align</span> &#123;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">  <span class="attribute">padding-right</span>: <span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">padding-left</span>: <span class="number">15px</span>;</span><br><span class="line">  <span class="attribute">margin-right</span>: auto;</span><br><span class="line">  <span class="attribute">margin-left</span>: auto;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.social-forum</span>,</span><br><span class="line"><span class="selector-class">.social-weibo</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>html 布局</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container text-align"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"bc-social-buttons"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"social-forum"</span>&gt;</span></span><br><span class="line">      Bootstrap问答社区</span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"social-weibo"</span>&gt;</span></span><br><span class="line">      新浪微博：@Bootstrap中文网</span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="projects"><a href="#projects" class="headerlink" title="projects"></a>projects</h3><h4 id="header-1"><a href="#header-1" class="headerlink" title="header"></a>header</h4><p>首先是包裹 header 的容器<code>projects-header</code>，使用百分比布局居中适应，保证容器内部的响应.</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.projects-header</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">60%</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">60px</span> <span class="number">0</span> <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">font-weight</span>: <span class="number">200</span>;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">40px</span>;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">margin-left</span>: auto;</span><br><span class="line">  <span class="attribute">margin-right</span>: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>header 内部使用 h2 标签包裹的标题<code>Bootstrap相关优质项目推荐</code>,设置了响应，当在大于 768px 的时候字体大小为 42px，小于 768px 的时候更改为 30px；</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.projects-header</span> <span class="selector-tag">h2</span> &#123;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">30px</span>;</span><br><span class="line">  <span class="attribute">letter-spacing</span>: -<span class="number">1px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@<span class="keyword">media</span> screen and (min-width: <span class="number">768px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.projects-header</span> <span class="selector-tag">h2</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">42px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="projects-区域"><a href="#projects-区域" class="headerlink" title="projects 区域"></a>projects 区域</h4><p>先说著名的 12 栅格布局，当屏幕大于<code>1200px</code>像素的时候使用<code>col-lg-3</code>将宽分为每份 25%，这里的 3 指的是 12 份取其中的 3 份，就是 1/4；当屏幕尺寸介于<code>992px-1200px</code>之间，使用<code>col-md-4</code>将宽度分成 3 份，每份占 1/3；当屏幕尺寸介于<code>768px-992px</code>之间时，使用<code>col-sm-6</code>,将屏幕分成 2 份（都是在只使用单一的分法时），当屏幕尺寸小于 768px 的时候不再栅格，使用默认的样式控制左右 padding 向中间挤压.</p>
+<p>由于采用<code>border-box</code>布局，上述栅格系统通过默认加入的左右 padding 15px 像素可以控制间隔。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">  -webkit-box-sizing: border-box;</span><br><span class="line">  -moz-box-sizing: border-box;</span><br><span class="line">  box-sizing: border-box;</span><br><span class="line">&#125;</span><br><span class="line">*:before,</span><br><span class="line">*:after &#123;</span><br><span class="line">  -webkit-box-sizing: border-box;</span><br><span class="line">  -moz-box-sizing: border-box;</span><br><span class="line">  box-sizing: border-box;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">media</span> (min-width: <span class="number">1200px</span>) &#123;</span><br><span class="line"><span class="selector-class">.col-lg-3</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">25%</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@<span class="keyword">media</span> (min-width: <span class="number">1200px</span>)</span><br><span class="line">.col-lg-<span class="number">1</span>, .col-lg-<span class="number">10</span>, .col-lg-<span class="number">11</span>, .col-lg-<span class="number">12</span>, .col-lg-<span class="number">2</span>, .col-lg-<span class="number">3</span>, .col-lg-<span class="number">4</span>, .col-lg-<span class="number">5</span>, .col-lg-<span class="number">6</span>, .col-lg-<span class="number">7</span>, .col-lg-<span class="number">8</span>, .col-lg-<span class="number">9</span> &#123;</span><br><span class="line">    <span class="selector-tag">float</span>: <span class="selector-tag">left</span>;</span><br><span class="line">@<span class="keyword">media</span> (min-width: <span class="number">992px</span>) &#123;</span><br><span class="line"><span class="selector-class">.col-md-4</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">33.33333333%</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@<span class="keyword">media</span> (min-width: <span class="number">992px</span>) &#123;</span><br><span class="line"><span class="selector-class">.col-md-1</span>, <span class="selector-class">.col-md-10</span>, <span class="selector-class">.col-md-11</span>, <span class="selector-class">.col-md-12</span>, <span class="selector-class">.col-md-2</span>, <span class="selector-class">.col-md-3</span>, <span class="selector-class">.col-md-4</span>, <span class="selector-class">.col-md-5</span>, <span class="selector-class">.col-md-6</span>, <span class="selector-class">.col-md-7</span>, <span class="selector-class">.col-md-8</span>, <span class="selector-class">.col-md-9</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@<span class="keyword">media</span> (min-width: <span class="number">768px</span>) &#123;</span><br><span class="line"><span class="selector-class">.col-sm-6</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50%</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*左右距离控制*/</span></span><br><span class="line">@<span class="keyword">media</span> (min-width: <span class="number">768px</span>) &#123;</span><br><span class="line"><span class="selector-class">.col-sm-1</span>, <span class="selector-class">.col-sm-10</span>, <span class="selector-class">.col-sm-11</span>, <span class="selector-class">.col-sm-12</span>, <span class="selector-class">.col-sm-2</span>, <span class="selector-class">.col-sm-3</span>, <span class="selector-class">.col-sm-4</span>, <span class="selector-class">.col-sm-5</span>, <span class="selector-class">.col-sm-6</span>, <span class="selector-class">.col-sm-7</span>, <span class="selector-class">.col-sm-8</span>, <span class="selector-class">.col-sm-9</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="selector-class">.col-lg-1</span>, <span class="selector-class">.col-lg-10</span>, <span class="selector-class">.col-lg-11</span>, <span class="selector-class">.col-lg-12</span>, <span class="selector-class">.col-lg-2</span>, <span class="selector-class">.col-lg-3</span>, <span class="selector-class">.col-lg-4</span>, <span class="selector-class">.col-lg-5</span>, <span class="selector-class">.col-lg-6</span>, <span class="selector-class">.col-lg-7</span>, <span class="selector-class">.col-lg-8</span>, <span class="selector-class">.col-lg-9</span>, <span class="selector-class">.col-md-1</span>, <span class="selector-class">.col-md-10</span>, <span class="selector-class">.col-md-11</span>, <span class="selector-class">.col-md-12</span>, <span class="selector-class">.col-md-2</span>, <span class="selector-class">.col-md-3</span>, <span class="selector-class">.col-md-4</span>, <span class="selector-class">.col-md-5</span>, <span class="selector-class">.col-md-6</span>, <span class="selector-class">.col-md-7</span>, <span class="selector-class">.col-md-8</span>, <span class="selector-class">.col-md-9</span>, <span class="selector-class">.col-sm-1</span>, <span class="selector-class">.col-sm-10</span>, <span class="selector-class">.col-sm-11</span>, <span class="selector-class">.col-sm-12</span>, <span class="selector-class">.col-sm-2</span>, <span class="selector-class">.col-sm-3</span>, <span class="selector-class">.col-sm-4</span>, <span class="selector-class">.col-sm-5</span>, <span class="selector-class">.col-sm-6</span>, <span class="selector-class">.col-sm-7</span>, <span class="selector-class">.col-sm-8</span>, <span class="selector-class">.col-sm-9</span>, <span class="selector-class">.col-xs-1</span>, <span class="selector-class">.col-xs-10</span>, <span class="selector-class">.col-xs-11</span>, <span class="selector-class">.col-xs-12</span>, <span class="selector-class">.col-xs-2</span>, <span class="selector-class">.col-xs-3</span>, <span class="selector-class">.col-xs-4</span>, <span class="selector-class">.col-xs-5</span>, <span class="selector-class">.col-xs-6</span>, <span class="selector-class">.col-xs-7</span>, <span class="selector-class">.col-xs-8</span>, <span class="selector-class">.col-xs-9</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">min-height</span>: <span class="number">1px</span>;</span><br><span class="line">    <span class="attribute">padding-right</span>: <span class="number">15px</span>;</span><br><span class="line">    <span class="attribute">padding-left</span>: <span class="number">15px</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="footer"><a href="#footer" class="headerlink" title="footer"></a>footer</h3><p>按照 footer 结构的布局，没有 css 样式的时候是上下结构布局，移动端响应比较好，在大设备上需要左右布局，这时候的栅格布局结构大致如下面的情况。</p>
+<p>在大于 768px 设备上面，将右侧的公司结构目录再次分成 12 份的布局结构，小于 768px 像素的时候这些拆分栅格失效，还保留了公共的 padding 来控制间隔距离，设计不可谓不妙。</p>
+<p>下面的<code>footer-bottom</code>结构基本与上面的 social 模块一样，不再赘述了…</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">footer</span> <span class="attr">class</span>=<span class="string">"footer "</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row footer-top"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-md-6 col-lg-6"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h4</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">img</span></span></span><br><span class="line"><span class="tag">            <span class="attr">src</span>=<span class="string">"https://assets.bootcss.com/www/assets/img/logo.png?1528519874373"</span></span></span><br><span class="line"><span class="tag">          /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>我们一直致力于为广大开发者提供更多的优质技术文档和辅助开发工具！<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-md-6  col-lg-5 col-lg-offset-1"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row about"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-sm-3"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">h4</span>&gt;</span>关于<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"list-unstyled"</span>&gt;</span></span><br><span class="line">              li*4 ...</span><br><span class="line">            <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-sm-3"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">h4</span>&gt;</span>联系方式<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"list-unstyled"</span>&gt;</span></span><br><span class="line">              li*2 ...</span><br><span class="line">            <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-sm-4"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">h4</span>&gt;</span>旗下网站<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"list-unstyled"</span>&gt;</span></span><br><span class="line">              li*5 ...</span><br><span class="line">            <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-sm-2"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">h4</span>&gt;</span>赞助商<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"list-unstyled"</span>&gt;</span></span><br><span class="line">              li ...</span><br><span class="line">            <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">hr</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row footer-bottom"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"list-inline text-center"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.miibeian.gov.cn/"</span> <span class="attr">target</span>=<span class="string">"_blank"</span></span></span><br><span class="line"><span class="tag">            &gt;</span>京ICP备11008151号<span class="tag">&lt;/<span class="name">a</span></span></span><br><span class="line"><span class="tag">          &gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>京公网安备11010802014853<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Css/">Css</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://xiaoyueyue.org/2019/05/14/深入bootstrap响应式布局/" data-title="深入bootstrap响应式布局 | RainBow&#39;s Blog" data-tsina class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2019/05/14/前端设计单位/" title="前端设计单位">
+  <strong>上一篇：</strong><br>
+  <span>
+  前端设计单位</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/05/14/项目上线部署操作/" title="项目上线部署操作">
+ <strong>下一篇：</strong><br> 
+ <span>项目上线部署操作
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#视口"><span class="toc-number">2.</span> <span class="toc-text">视口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#屏幕适配"><span class="toc-number">2.1.</span> <span class="toc-text">屏幕适配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#媒体查询"><span class="toc-number">3.</span> <span class="toc-text">媒体查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bootstrap-的响应源码"><span class="toc-number">4.</span> <span class="toc-text">Bootstrap 的响应源码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#container"><span class="toc-number">4.1.</span> <span class="toc-text">container</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#display"><span class="toc-number">4.2.</span> <span class="toc-text">display</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Response-分析"><span class="toc-number">5.</span> <span class="toc-text">Response 分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#header"><span class="toc-number">5.1.</span> <span class="toc-text">header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#masthead-报头"><span class="toc-number">5.2.</span> <span class="toc-text">masthead 报头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#social-社交"><span class="toc-number">5.3.</span> <span class="toc-text">social 社交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#projects"><span class="toc-number">5.4.</span> <span class="toc-text">projects</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#header-1"><span class="toc-number">5.4.1.</span> <span class="toc-text">header</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#projects-区域"><span class="toc-number">5.4.2.</span> <span class="toc-text">projects 区域</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#footer"><span class="toc-number">5.5.</span> <span class="toc-text">footer</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="xiaoyueyue165" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Javascript/" title="Javascript">Javascript<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/开发者笔记/" title="开发者笔记">开发者笔记<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Css/" title="Css">Css<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/拥抱开源/" title="拥抱开源">拥抱开源<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Interview/" title="Interview">Interview<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/React/" title="React">React<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/理解计算机/" title="理解计算机">理解计算机<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/观点与感想/" title="观点与感想">观点与感想<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">关注博客</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank" title="阮一峰的网络日志">阮一峰的网络日志</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.barretlee.com/entry/" target="_blank" title="小胡子哥的博客">小胡子哥的博客</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">关注唱吧</p>
+    <ul>
+        
+          <li class="changba_li">
+            
+            <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/874670453_200_200.jpg">
+            
+            
+            	<a class="changba_a" href="http://changba.com/u/104571671" target="_blank" title="琳琳abcdefg">琳琳abcdefg</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+              <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/463875924_200_200.jpg">
+            
+            
+            	<a class="changba_a" href="http://changba.com/u/193189028" target="_blank" title="Vesp3r">Vesp3r</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+               <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/880681979_200_200.jpg">
+             
+            
+            	<a class="changba_a" href="http://changba.com/u/21968651" target="_blank" title="大崇崇Zebra">大崇崇Zebra</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+                  <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/448860018_200_200.jpg">
+             
+            
+            	<a class="changba_a" href="http://changba.com/u/39302742" target="_blank" title="基督徒小越越">基督徒小越越</a>
+            
+          </image></li>
+        
+    </ul>
+</div>
+
+
+  
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m a Front-end developer. <br>
+			This is my blog,and my life is brilliant.</p>
+	</section>
+	 
+	<div class="social-font">
+		
+		
+		<a href="https://github.com/xiaoyueyue165" target="_blank" class="icon-github" title="github"></a>
+    
+    
+      <a href="http://changba.com/u/39302742" target="_blank" class="icon-changba" title="changba"></a>
+      
+		
+		
+		<a href="https://twitter.com/yanyueyou" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:xiaoyueyue165@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019
+		
+		<a href="/about" target="_blank" title="Xiaoyueyue">Xiaoyueyue</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

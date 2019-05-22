@@ -1,0 +1,574 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>React组件通信 | RainBow&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Xiaoyueyue">
+    
+
+    
+    <meta name="description" content="组件通信在这里只讲 React 组件与组件本身的通信，组件通信主要分为三个部分：  父组件向子组件通信：父组件向子组件传参或者是父组件调用子组件的方法 子组件向父组件通信：子组件向父组件传参或者是子组件调用父组件的方法 兄弟组件通信：兄弟组件之间相互传参或调用 建议不要有太深的的嵌套关系  父子组件 父组件向子组件传参父组件向子组件参可以在子组件上绑定自定义属性，或者将父组件内部 state 的值">
+<meta name="keywords" content="Javascript,React">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React组件通信">
+<meta property="og:url" content="https://xiaoyueyue.org/2019/05/14/React组件通信/index.html">
+<meta property="og:site_name" content="RainBow&#39;s Blog">
+<meta property="og:description" content="组件通信在这里只讲 React 组件与组件本身的通信，组件通信主要分为三个部分：  父组件向子组件通信：父组件向子组件传参或者是父组件调用子组件的方法 子组件向父组件通信：子组件向父组件传参或者是子组件调用父组件的方法 兄弟组件通信：兄弟组件之间相互传参或调用 建议不要有太深的的嵌套关系  父子组件 父组件向子组件传参父组件向子组件参可以在子组件上绑定自定义属性，或者将父组件内部 state 的值">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-21T02:06:57.017Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React组件通信">
+<meta name="twitter:description" content="组件通信在这里只讲 React 组件与组件本身的通信，组件通信主要分为三个部分：  父组件向子组件通信：父组件向子组件传参或者是父组件调用子组件的方法 子组件向父组件通信：子组件向父组件传参或者是子组件调用父组件的方法 兄弟组件通信：兄弟组件之间相互传参或调用 建议不要有太深的的嵌套关系  父子组件 父组件向子组件传参父组件向子组件参可以在子组件上绑定自定义属性，或者将父组件内部 state 的值">
+<meta name="twitter:creator" content="@yanyueyou">
+
+    
+    <link rel="alternative" href="/atom.xml" title="RainBow&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.jpg" alt="RainBow&#39;s Blog" title="RainBow&#39;s Blog"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="RainBow&#39;s Blog">RainBow&#39;s Blog</a></h1>
+				<h2 class="blog-motto">余则缊袍敝衣处其间，略无慕艳意。以中有足乐者，不知口体之奉不若人也！</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/todolist">TodoList</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
+						<input type="hidden" name="q" value="site:xiaoyueyue.org">
+					</form>
+					
+					</li>
+				</ul>
+			</ul></nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/05/14/React组件通信/" title="React组件通信" itemprop="url">React组件通信</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Xiaoyueyue" target="_blank" itemprop="author">Xiaoyueyue</a>
+		
+  </p><p class="article-time">
+    <time datetime="2019-05-14T05:49:06.739Z" itemprop="datePublished"> 发表于 2019-05-14 13:49:06</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#组件通信"><span class="toc-number">1.</span> <span class="toc-text">组件通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#父子组件"><span class="toc-number">2.</span> <span class="toc-text">父子组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子父组件"><span class="toc-number">3.</span> <span class="toc-text">子父组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#兄弟组件"><span class="toc-number">4.</span> <span class="toc-text">兄弟组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#利用共同的父组件"><span class="toc-number">4.1.</span> <span class="toc-text">利用共同的父组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#利用-Context"><span class="toc-number">4.2.</span> <span class="toc-text">利用 Context</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#发布订阅"><span class="toc-number">4.3.</span> <span class="toc-text">发布订阅</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h2 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h2><p>在这里只讲 React 组件与组件本身的通信，组件通信主要分为三个部分：</p>
+<ul>
+<li>父组件向子组件通信：父组件向子组件传参或者是父组件调用子组件的方法</li>
+<li>子组件向父组件通信：子组件向父组件传参或者是子组件调用父组件的方法</li>
+<li>兄弟组件通信：兄弟组件之间相互传参或调用 建议不要有太深的的嵌套关系</li>
+</ul>
+<h2 id="父子组件"><a href="#父子组件" class="headerlink" title="父子组件"></a>父子组件</h2><ul>
+<li>父组件向子组件传参<br>父组件向子组件参可以在子组件上绑定自定义属性，或者将父组件内部 state 的值进行绑定为子组件的属性值进行传递。</li>
+<li>父组件调用子组件的方法<br>在子组件上绑定 ref 属性，并在子组件内部定义方法（可接受参数），在父组件内部使用<code>this.refs.自定义属性值.函数方法名</code>，进行调用，可传递参数。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 父组件</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      value: <span class="string">""</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  handleChange(e) &#123;</span><br><span class="line">    <span class="keyword">this</span>.value = e.target.value;</span><br><span class="line">    <span class="comment">// 调用子组件的方法</span></span><br><span class="line">    <span class="keyword">this</span>.refs.c1.changeChild(<span class="keyword">this</span>.value);</span><br><span class="line">  &#125;</span><br><span class="line">  handleClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      value: <span class="keyword">this</span>.value</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        我是parent</span><br><span class="line">        &lt;input onChange=&#123;<span class="keyword">this</span>.handleChange.bind(<span class="keyword">this</span>)&#125; /&gt;</span><br><span class="line">        &lt;button className=<span class="string">"button"</span> onClick=&#123;<span class="keyword">this</span>.handleClick.bind(<span class="keyword">this</span>)&#125;&gt;</span><br><span class="line">          通知</span><br><span class="line">        &lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">        &lt;div&gt;</span></span><br><span class="line"><span class="regexp">          &lt;br /</span>&gt;</span><br><span class="line"></span><br><span class="line">          &lt;Child ref=<span class="string">"c1"</span> value=&#123;<span class="keyword">this</span>.state.value&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 子组件</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      text: <span class="string">""</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  changeChild(text) &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      text: text</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; value &#125; = <span class="keyword">this</span>.props;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;p&gt;我是Child,来自父组件的传参：&#123;value&#125;&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">        &lt;br /</span>&gt;</span><br><span class="line">        &lt;p&gt;我是child，来自父组件的调用：&#123;<span class="keyword">this</span>.state.text&#125;&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="子父组件"><a href="#子父组件" class="headerlink" title="子父组件"></a>子父组件</h2><p>子组件向父组件传值，在被调用的子组件上先定义回调函数，再来单独的子组件上定义新的函数，通过 props 获取 callback 函数进行值传递.</p>
+<blockquote>
+<p>这里的 state 可以分别定义在父组件或组子组件上</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// parent</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      value: <span class="string">""</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  setValue(param) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(param);</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      value: param</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;Child setValue=&#123;<span class="keyword">this</span>.setValue.bind(<span class="keyword">this</span>)&#125; /&gt;</span><br><span class="line">        &lt;p&gt;我是Parent,接受子组件的传参:&#123;<span class="keyword">this</span>.state.value&#125;&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// child</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      text: <span class="string">""</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  handleChange(e) &#123;</span><br><span class="line">    <span class="keyword">this</span>.props.setValue(e.target.value);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        我是child</span><br><span class="line">        &lt;input onChange=&#123;<span class="keyword">this</span>.handleChange.bind(<span class="keyword">this</span>)&#125; /&gt;</span><br><span class="line">        &lt;br /&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="兄弟组件"><a href="#兄弟组件" class="headerlink" title="兄弟组件"></a>兄弟组件</h2><h3 id="利用共同的父组件"><a href="#利用共同的父组件" class="headerlink" title="利用共同的父组件"></a>利用共同的父组件</h3><p>先将两个子组件<code>child1</code>和<code>child2</code>的参数传递给父组件，再由分发参数，通过<code>refs</code>寻找函数方法的方式进行函数调用传参。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Parent</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Parent</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      value: <span class="string">""</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  setValue2(param) &#123;</span><br><span class="line">    <span class="keyword">this</span>.refs.c1.changeState(param);</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      value: param</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  setValue1(param) &#123;</span><br><span class="line">    <span class="keyword">this</span>.refs.c2.changeState(param);</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">      value: param</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;p&gt;我是Parent,接受子组件的传参:&#123;<span class="keyword">this</span>.state.value&#125;&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">        &lt;Child1 ref="c1" setValue=&#123;this.setValue1.bind(this)&#125; /</span>&gt;</span><br><span class="line">        &lt;Child2 ref=<span class="string">"c2"</span> setValue=&#123;<span class="keyword">this</span>.setValue2.bind(<span class="keyword">this</span>)&#125; /&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Child1</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child1</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      text: <span class="string">""</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  handleChange(e) &#123;</span><br><span class="line">    <span class="keyword">this</span>.props.setValue(e.target.value);</span><br><span class="line">  &#125;</span><br><span class="line">  changeState(text) &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123; <span class="attr">text</span>: text &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        我是child1</span><br><span class="line">        &lt;input onChange=&#123;<span class="keyword">this</span>.handleChange.bind(<span class="keyword">this</span>)&#125; /&gt;</span><br><span class="line">        &lt;p&gt;来自子组件<span class="number">2</span>的调用: &#123;<span class="keyword">this</span>.state.text&#125;&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">        &lt;br /</span>&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Child2</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child2</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">    <span class="keyword">super</span>(props);</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      text: <span class="string">""</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  handleChange(e) &#123;</span><br><span class="line">    <span class="keyword">this</span>.props.setValue(e.target.value);</span><br><span class="line">  &#125;</span><br><span class="line">  changeState(text) &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123; <span class="attr">text</span>: text &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        我是child1</span><br><span class="line">        &lt;input onChange=&#123;<span class="keyword">this</span>.handleChange.bind(<span class="keyword">this</span>)&#125; /&gt;</span><br><span class="line">        &lt;p&gt;来自子组件<span class="number">1</span>的调用: &#123;<span class="keyword">this</span>.state.text&#125;&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">        &lt;br /</span>&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="利用-Context"><a href="#利用-Context" class="headerlink" title="利用 Context"></a>利用 Context</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 父组件</span></span><br><span class="line"><span class="keyword">var</span> Parent = React.createClass(&#123;</span><br><span class="line">  getChildContext: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      changeChildren1: <span class="function"><span class="keyword">function</span>(<span class="params">text</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.refs.cp1.changeState(text);</span><br><span class="line">      &#125;.bind(<span class="keyword">this</span>),</span><br><span class="line">      changeChildren2: <span class="function"><span class="keyword">function</span>(<span class="params">text</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.refs.cp2.changeState(text);</span><br><span class="line">      &#125;.bind(<span class="keyword">this</span>)</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  childContextTypes: &#123;</span><br><span class="line">    changeChildren1: React.PropTypes.func.isRequired,</span><br><span class="line">    changeChildren2: React.PropTypes.func.isRequired</span><br><span class="line">  &#125;,</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;Children1 ref=<span class="string">"cp1"</span> /&gt;</span><br><span class="line">        &lt;Children2 ref=<span class="string">"cp2"</span> /&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;);</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//子组件1</span></span><br><span class="line"><span class="keyword">var</span> Children1 = React.createClass(&#123;</span><br><span class="line">  getInitialState: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      text: <span class="string">""</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  contextTypes: &#123;</span><br><span class="line">    changeChildren2: React.PropTypes.func.isRequired</span><br><span class="line">  &#125;,</span><br><span class="line">  changeState: <span class="function"><span class="keyword">function</span>(<span class="params">text</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123; <span class="attr">text</span>: text &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">//输入事件</span></span><br><span class="line">  change: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//调用子组件的方法</span></span><br><span class="line">    <span class="keyword">this</span>.context.changeChildren2(event.target.value);</span><br><span class="line">  &#125;,</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;p&gt;</span><br><span class="line">          &lt;label&gt;子组件<span class="number">1</span>&lt;<span class="regexp">/label&gt;</span></span><br><span class="line"><span class="regexp">          &lt;input type="text" onChange=&#123;this.change&#125; /</span>&gt;</span><br><span class="line">        &lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">        &lt;p&gt;来自子组件2的调用-&#123;this.state.text&#125;&lt;/</span>p&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;);</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//子组件2</span></span><br><span class="line"><span class="keyword">var</span> Children2 = React.createClass(&#123;</span><br><span class="line">  getInitialState: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      text: <span class="string">""</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  contextTypes: &#123;</span><br><span class="line">    changeChildren1: React.PropTypes.func.isRequired</span><br><span class="line">  &#125;,</span><br><span class="line">  changeState: <span class="function"><span class="keyword">function</span>(<span class="params">text</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123; <span class="attr">text</span>: text &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">//输入事件</span></span><br><span class="line">  change: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//调用子组件的方法</span></span><br><span class="line">    <span class="keyword">this</span>.context.changeChildren1(event.target.value);</span><br><span class="line">  &#125;,</span><br><span class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;p&gt;</span><br><span class="line">          &lt;label&gt;子组件<span class="number">2</span>&lt;<span class="regexp">/label&gt;</span></span><br><span class="line"><span class="regexp">          &lt;input type="text" onChange=&#123;this.change&#125; /</span>&gt;</span><br><span class="line">        &lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">        &lt;p&gt;来自子组件1的调用-&#123;this.state.text&#125;&lt;/</span>p&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;);</span></span><br></pre></td></tr></table></figure>
+<h3 id="发布订阅"><a href="#发布订阅" class="headerlink" title="发布订阅"></a>发布订阅</h3>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Javascript/">Javascript</a><a href="/tags/React/">React</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://xiaoyueyue.org/2019/05/14/React组件通信/" data-title="React组件通信 | RainBow&#39;s Blog" data-tsina class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2019/05/14/redux入门/" title="redux入门">
+  <strong>上一篇：</strong><br>
+  <span>
+  redux入门</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/05/14/函数声明与函数表达式/" title="函数声明与函数表达式">
+ <strong>下一篇：</strong><br> 
+ <span>函数声明与函数表达式
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#组件通信"><span class="toc-number">1.</span> <span class="toc-text">组件通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#父子组件"><span class="toc-number">2.</span> <span class="toc-text">父子组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子父组件"><span class="toc-number">3.</span> <span class="toc-text">子父组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#兄弟组件"><span class="toc-number">4.</span> <span class="toc-text">兄弟组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#利用共同的父组件"><span class="toc-number">4.1.</span> <span class="toc-text">利用共同的父组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#利用-Context"><span class="toc-number">4.2.</span> <span class="toc-text">利用 Context</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#发布订阅"><span class="toc-number">4.3.</span> <span class="toc-text">发布订阅</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="xiaoyueyue165" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Javascript/" title="Javascript">Javascript<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/开发者笔记/" title="开发者笔记">开发者笔记<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Css/" title="Css">Css<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/拥抱开源/" title="拥抱开源">拥抱开源<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Interview/" title="Interview">Interview<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/React/" title="React">React<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/理解计算机/" title="理解计算机">理解计算机<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/观点与感想/" title="观点与感想">观点与感想<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">关注博客</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank" title="阮一峰的网络日志">阮一峰的网络日志</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.barretlee.com/entry/" target="_blank" title="小胡子哥的博客">小胡子哥的博客</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">关注唱吧</p>
+    <ul>
+        
+          <li class="changba_li">
+            
+            <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/874670453_200_200.jpg">
+            
+            
+            	<a class="changba_a" href="http://changba.com/u/104571671" target="_blank" title="琳琳abcdefg">琳琳abcdefg</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+              <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/463875924_200_200.jpg">
+            
+            
+            	<a class="changba_a" href="http://changba.com/u/193189028" target="_blank" title="Vesp3r">Vesp3r</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+               <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/880681979_200_200.jpg">
+             
+            
+            	<a class="changba_a" href="http://changba.com/u/21968651" target="_blank" title="大崇崇Zebra">大崇崇Zebra</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+                  <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/448860018_200_200.jpg">
+             
+            
+            	<a class="changba_a" href="http://changba.com/u/39302742" target="_blank" title="基督徒小越越">基督徒小越越</a>
+            
+          </image></li>
+        
+    </ul>
+</div>
+
+
+  
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m a Front-end developer. <br>
+			This is my blog,and my life is brilliant.</p>
+	</section>
+	 
+	<div class="social-font">
+		
+		
+		<a href="https://github.com/xiaoyueyue165" target="_blank" class="icon-github" title="github"></a>
+    
+    
+      <a href="http://changba.com/u/39302742" target="_blank" class="icon-changba" title="changba"></a>
+      
+		
+		
+		<a href="https://twitter.com/yanyueyou" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:xiaoyueyue165@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019
+		
+		<a href="/about" target="_blank" title="Xiaoyueyue">Xiaoyueyue</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

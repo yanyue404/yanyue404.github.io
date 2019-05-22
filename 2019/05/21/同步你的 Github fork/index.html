@@ -1,0 +1,597 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>同步你的 Github fork | RainBow&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Xiaoyueyue">
+    
+
+    
+    <meta name="description" content="前言选择拥抱开源，无疑参与 github的开源项目是最好的选择,先从同步 fork 仓库开始做起！ 一、确认本地 fork 仓库版本是否落后于原仓库1. 查看 github fork 仓库后的 commit数量及提交日志 本地 clone 自己仓库 后的 commit log 日志，与 gihub 上一致  2. 查看原仓库的相关信息，比较  比较后得知：本地 fork仓库的版本落后于原始仓库">
+<meta name="keywords" content="github,拥抱开源">
+<meta property="og:type" content="article">
+<meta property="og:title" content="同步你的 Github fork">
+<meta property="og:url" content="https://xiaoyueyue.org/2019/05/21/同步你的 Github fork/index.html">
+<meta property="og:site_name" content="RainBow&#39;s Blog">
+<meta property="og:description" content="前言选择拥抱开源，无疑参与 github的开源项目是最好的选择,先从同步 fork 仓库开始做起！ 一、确认本地 fork 仓库版本是否落后于原仓库1. 查看 github fork 仓库后的 commit数量及提交日志 本地 clone 自己仓库 后的 commit log 日志，与 gihub 上一致  2. 查看原仓库的相关信息，比较  比较后得知：本地 fork仓库的版本落后于原始仓库">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/df551ea5ly1g36eil8exij20zs0nqn0d.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/df551ea5ly1g36eo5q8foj20z50jlwg7.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/df551ea5ly1g36eudcb4rj20wz0nh0vg.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/df551ea5ly1g36fh3o0haj20zl0nrwhg.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/df551ea5ly1g36fdmme4wj21a50h4760.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/df551ea5ly1g36fit9vzhj20xd0nttbz.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/df551ea5ly1g36fm0iv0bj20l806j0t6.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/df551ea5ly1g36ftr5z0oj20wo0ns41n.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/df551ea5ly1g36fvs95elj20w50nmwhn.jpg">
+<meta property="og:updated_time" content="2019-05-21T02:08:03.003Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="同步你的 Github fork">
+<meta name="twitter:description" content="前言选择拥抱开源，无疑参与 github的开源项目是最好的选择,先从同步 fork 仓库开始做起！ 一、确认本地 fork 仓库版本是否落后于原仓库1. 查看 github fork 仓库后的 commit数量及提交日志 本地 clone 自己仓库 后的 commit log 日志，与 gihub 上一致  2. 查看原仓库的相关信息，比较  比较后得知：本地 fork仓库的版本落后于原始仓库">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/df551ea5ly1g36eil8exij20zs0nqn0d.jpg">
+<meta name="twitter:creator" content="@yanyueyou">
+
+    
+    <link rel="alternative" href="/atom.xml" title="RainBow&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.jpg" alt="RainBow&#39;s Blog" title="RainBow&#39;s Blog"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="RainBow&#39;s Blog">RainBow&#39;s Blog</a></h1>
+				<h2 class="blog-motto">余则缊袍敝衣处其间，略无慕艳意。以中有足乐者，不知口体之奉不若人也！</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/todolist">TodoList</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
+						<input type="hidden" name="q" value="site:xiaoyueyue.org">
+					</form>
+					
+					</li>
+				</ul>
+			</ul></nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/05/21/同步你的 Github fork/" title="同步你的 Github fork" itemprop="url">同步你的 Github fork</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Xiaoyueyue" target="_blank" itemprop="author">Xiaoyueyue</a>
+		
+  </p><p class="article-time">
+    <time datetime="2019-05-21T02:06:57.044Z" itemprop="datePublished"> 发表于 2019-05-21 10:06:57</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一、确认本地-fork-仓库版本是否落后于原仓库"><span class="toc-number">2.</span> <span class="toc-text">一、确认本地 fork 仓库版本是否落后于原仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-查看-github-fork-仓库后的-commit数量及提交日志"><span class="toc-number">2.1.</span> <span class="toc-text">1. 查看 github fork 仓库后的 commit数量及提交日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-查看原仓库的相关信息，比较"><span class="toc-number">2.2.</span> <span class="toc-text">2. 查看原仓库的相关信息，比较</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、-同步"><span class="toc-number">3.</span> <span class="toc-text">二、 同步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-查看本地仓库设置的远端仓库，是否有连接上游原始远端仓库"><span class="toc-number">3.1.</span> <span class="toc-text">1. 查看本地仓库设置的远端仓库，是否有连接上游原始远端仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-fetch，取回原仓库的更新"><span class="toc-number">3.2.</span> <span class="toc-text">2. fetch，取回原仓库的更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-将-fetch-后的更新内容合并至主分支"><span class="toc-number">3.3.</span> <span class="toc-text">3. 将 fetch 后的更新内容合并至主分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-更新，推送至远端-master-分支"><span class="toc-number">3.4.</span> <span class="toc-text">4.更新，推送至远端 master 分支</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>选择拥抱开源，无疑参与 <code>github</code>的开源项目是最好的选择,先从同步 fork 仓库开始做起！</p>
+<h2 id="一、确认本地-fork-仓库版本是否落后于原仓库"><a href="#一、确认本地-fork-仓库版本是否落后于原仓库" class="headerlink" title="一、确认本地 fork 仓库版本是否落后于原仓库"></a>一、确认本地 fork 仓库版本是否落后于原仓库</h2><h3 id="1-查看-github-fork-仓库后的-commit数量及提交日志"><a href="#1-查看-github-fork-仓库后的-commit数量及提交日志" class="headerlink" title="1. 查看 github fork 仓库后的 commit数量及提交日志"></a>1. 查看 github fork 仓库后的 <code>commit</code>数量及提交日志</h3><p><img src="http://ww1.sinaimg.cn/large/df551ea5ly1g36eil8exij20zs0nqn0d.jpg" alt></p>
+<p>本地 <code>clone</code> 自己仓库 后的 <code>commit log</code> 日志，与 gihub 上一致</p>
+<p><img src="http://ww1.sinaimg.cn/large/df551ea5ly1g36eo5q8foj20z50jlwg7.jpg" alt></p>
+<h3 id="2-查看原仓库的相关信息，比较"><a href="#2-查看原仓库的相关信息，比较" class="headerlink" title="2. 查看原仓库的相关信息，比较"></a>2. 查看原仓库的相关信息，比较</h3><p><img src="http://ww1.sinaimg.cn/large/df551ea5ly1g36eudcb4rj20wz0nh0vg.jpg" alt></p>
+<blockquote>
+<p><strong>比较后得知</strong>：本地 <code>fork</code>仓库的版本落后于原始仓库</p>
+</blockquote>
+<p>下一步计划，准备开始同步！</p>
+<h2 id="二、-同步"><a href="#二、-同步" class="headerlink" title="二、 同步"></a>二、 同步</h2><h3 id="1-查看本地仓库设置的远端仓库，是否有连接上游原始远端仓库"><a href="#1-查看本地仓库设置的远端仓库，是否有连接上游原始远端仓库" class="headerlink" title="1. 查看本地仓库设置的远端仓库，是否有连接上游原始远端仓库"></a>1. 查看本地仓库设置的远端仓库，是否有连接上游原始远端仓库</h3><p>如果未连接上游仓库，添加远程仓库的变量地址</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$  git remote -v</span><br><span class="line"></span><br><span class="line">origin  https://github.com/xiaoyueyue165/taro.git (fetch)</span><br><span class="line">origin  https://github.com/xiaoyueyue165/taro.git (push)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>添加上游仓库</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add upsteream https://github.com/NervJS/taro.git</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/df551ea5ly1g36fh3o0haj20zl0nrwhg.jpg" alt></p>
+<ul>
+<li>再次查看远程仓库指向地址列表，确认添加</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$  git remote -v</span><br><span class="line">origin  https://github.com/xiaoyueyue165/taro.git (fetch)</span><br><span class="line">origin  https://github.com/xiaoyueyue165/taro.git (push)</span><br><span class="line">upsteream  https://github.com/NervJS/taro.git (fetch)</span><br><span class="line">upsteream  https://github.com/NervJS/taro.git (push)</span><br></pre></td></tr></table></figure>
+<h3 id="2-fetch，取回原仓库的更新"><a href="#2-fetch，取回原仓库的更新" class="headerlink" title="2. fetch，取回原仓库的更新"></a>2. fetch，取回原仓库的更新</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git fetch upsteream</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>默认情况下，git fetch 取回所有分支（branch）的更新</p>
+</blockquote>
+<h3 id="3-将-fetch-后的更新内容合并至主分支"><a href="#3-将-fetch-后的更新内容合并至主分支" class="headerlink" title="3. 将 fetch 后的更新内容合并至主分支"></a>3. 将 fetch 后的更新内容合并至主分支</h3><p>所取回的更新，在本地主机上要用”远程主机名/分支名”的形式读取。比如<code>upsteream</code>主机的<code>master</code>，就要用 <code>upsteream/master</code> 读取。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git merge upsteream/master</span><br></pre></td></tr></table></figure>
+<p>此时会发现本地 master 分支的 <code>commit</code> 日志已经与原仓库的日志保持一致</p>
+<ul>
+<li>本地 master</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/df551ea5ly1g36fdmme4wj21a50h4760.jpg" alt></p>
+<ul>
+<li>原始仓库</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/df551ea5ly1g36fit9vzhj20xd0nttbz.jpg" alt></p>
+<h3 id="4-更新，推送至远端-master-分支"><a href="#4-更新，推送至远端-master-分支" class="headerlink" title="4.更新，推送至远端 master 分支"></a>4.更新，推送至远端 master 分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin master</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/df551ea5ly1g36fm0iv0bj20l806j0t6.jpg" alt></p>
+<ul>
+<li>自己 fork 的 仓库变化， <code>commit</code> 数量与 最新日志与原仓库一致</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/df551ea5ly1g36ftr5z0oj20wo0ns41n.jpg" alt></p>
+<p><img src="http://ww1.sinaimg.cn/large/df551ea5ly1g36fvs95elj20w50nmwhn.jpg" alt></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://www.ruanyifeng.com/blog/2014/06/git_remote.html" target="_blank" rel="noopener">Git 远程操作详解</a> ， by 阮一峰</li>
+<li><a href="https://www.youtube.com/watch?v=-zvHQXnBO6c" target="_blank" rel="noopener">Syncing Your GitHub Fork</a> , by <a href="https://www.youtube.com/channel/UCnVzApLJE2ljPZSeQylSEyg" target="_blank" rel="noopener">Data School</a></li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/github/">github</a><a href="/tags/拥抱开源/">拥抱开源</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://xiaoyueyue.org/2019/05/21/同步你的 Github fork/" data-title="同步你的 Github fork | RainBow&#39;s Blog" data-tsina class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2019/05/21/npm-package-js-sdk-function/" title="npm-package-js-sdk-function">
+ <strong>下一篇：</strong><br> 
+ <span>npm-package-js-sdk-function
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一、确认本地-fork-仓库版本是否落后于原仓库"><span class="toc-number">2.</span> <span class="toc-text">一、确认本地 fork 仓库版本是否落后于原仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-查看-github-fork-仓库后的-commit数量及提交日志"><span class="toc-number">2.1.</span> <span class="toc-text">1. 查看 github fork 仓库后的 commit数量及提交日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-查看原仓库的相关信息，比较"><span class="toc-number">2.2.</span> <span class="toc-text">2. 查看原仓库的相关信息，比较</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、-同步"><span class="toc-number">3.</span> <span class="toc-text">二、 同步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-查看本地仓库设置的远端仓库，是否有连接上游原始远端仓库"><span class="toc-number">3.1.</span> <span class="toc-text">1. 查看本地仓库设置的远端仓库，是否有连接上游原始远端仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-fetch，取回原仓库的更新"><span class="toc-number">3.2.</span> <span class="toc-text">2. fetch，取回原仓库的更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-将-fetch-后的更新内容合并至主分支"><span class="toc-number">3.3.</span> <span class="toc-text">3. 将 fetch 后的更新内容合并至主分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-更新，推送至远端-master-分支"><span class="toc-number">3.4.</span> <span class="toc-text">4.更新，推送至远端 master 分支</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="xiaoyueyue165" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Javascript/" title="Javascript">Javascript<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/开发者笔记/" title="开发者笔记">开发者笔记<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Css/" title="Css">Css<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/拥抱开源/" title="拥抱开源">拥抱开源<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Interview/" title="Interview">Interview<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/React/" title="React">React<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/理解计算机/" title="理解计算机">理解计算机<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/观点与感想/" title="观点与感想">观点与感想<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">关注博客</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank" title="阮一峰的网络日志">阮一峰的网络日志</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.barretlee.com/entry/" target="_blank" title="小胡子哥的博客">小胡子哥的博客</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">关注唱吧</p>
+    <ul>
+        
+          <li class="changba_li">
+            
+            <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/874670453_200_200.jpg">
+            
+            
+            	<a class="changba_a" href="http://changba.com/u/104571671" target="_blank" title="琳琳abcdefg">琳琳abcdefg</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+              <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/463875924_200_200.jpg">
+            
+            
+            	<a class="changba_a" href="http://changba.com/u/193189028" target="_blank" title="Vesp3r">Vesp3r</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+               <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/880681979_200_200.jpg">
+             
+            
+            	<a class="changba_a" href="http://changba.com/u/21968651" target="_blank" title="大崇崇Zebra">大崇崇Zebra</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+                  <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/448860018_200_200.jpg">
+             
+            
+            	<a class="changba_a" href="http://changba.com/u/39302742" target="_blank" title="基督徒小越越">基督徒小越越</a>
+            
+          </image></li>
+        
+    </ul>
+</div>
+
+
+  
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m a Front-end developer. <br>
+			This is my blog,and my life is brilliant.</p>
+	</section>
+	 
+	<div class="social-font">
+		
+		
+		<a href="https://github.com/xiaoyueyue165" target="_blank" class="icon-github" title="github"></a>
+    
+    
+      <a href="http://changba.com/u/39302742" target="_blank" class="icon-changba" title="changba"></a>
+      
+		
+		
+		<a href="https://twitter.com/yanyueyou" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:xiaoyueyue165@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019
+		
+		<a href="/about" target="_blank" title="Xiaoyueyue">Xiaoyueyue</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

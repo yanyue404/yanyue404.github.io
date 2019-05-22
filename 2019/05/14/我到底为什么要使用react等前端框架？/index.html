@@ -1,0 +1,587 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>我到底为什么要使用react等前端框架？ | RainBow&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Xiaoyueyue">
+    
+
+    
+    <meta name="description" content="React 它是什么？能做什么？React 是专注于复杂 UI 层业务的前端框架， 基于 Virtual DOM 的 diff 渲染以最小的代价来更新 dom(高效渲染)。  参考 网上都说操作真实 DOM 慢，但测试结果却比 React 更快，为什么？  stackoverflow virtual-dom 作者回答   它存在的理由是什么？解决了什么样的问题、满足了什么样的需求？   数据驱动的">
+<meta name="keywords" content="观点与感想">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我到底为什么要使用react等前端框架？">
+<meta property="og:url" content="https://xiaoyueyue.org/2019/05/14/我到底为什么要使用react等前端框架？/index.html">
+<meta property="og:site_name" content="RainBow&#39;s Blog">
+<meta property="og:description" content="React 它是什么？能做什么？React 是专注于复杂 UI 层业务的前端框架， 基于 Virtual DOM 的 diff 渲染以最小的代价来更新 dom(高效渲染)。  参考 网上都说操作真实 DOM 慢，但测试结果却比 React 更快，为什么？  stackoverflow virtual-dom 作者回答   它存在的理由是什么？解决了什么样的问题、满足了什么样的需求？   数据驱动的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-21T02:06:57.047Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="我到底为什么要使用react等前端框架？">
+<meta name="twitter:description" content="React 它是什么？能做什么？React 是专注于复杂 UI 层业务的前端框架， 基于 Virtual DOM 的 diff 渲染以最小的代价来更新 dom(高效渲染)。  参考 网上都说操作真实 DOM 慢，但测试结果却比 React 更快，为什么？  stackoverflow virtual-dom 作者回答   它存在的理由是什么？解决了什么样的问题、满足了什么样的需求？   数据驱动的">
+<meta name="twitter:creator" content="@yanyueyou">
+
+    
+    <link rel="alternative" href="/atom.xml" title="RainBow&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.jpg" alt="RainBow&#39;s Blog" title="RainBow&#39;s Blog"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="RainBow&#39;s Blog">RainBow&#39;s Blog</a></h1>
+				<h2 class="blog-motto">余则缊袍敝衣处其间，略无慕艳意。以中有足乐者，不知口体之奉不若人也！</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/todolist">TodoList</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
+						<input type="hidden" name="q" value="site:xiaoyueyue.org">
+					</form>
+					
+					</li>
+				</ul>
+			</ul></nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/05/14/我到底为什么要使用react等前端框架？/" title="我到底为什么要使用react等前端框架？" itemprop="url">我到底为什么要使用react等前端框架？</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Xiaoyueyue" target="_blank" itemprop="author">Xiaoyueyue</a>
+		
+  </p><p class="article-time">
+    <time datetime="2019-05-14T05:49:06.750Z" itemprop="datePublished"> 发表于 2019-05-14 13:49:06</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#React"><span class="toc-number">1.</span> <span class="toc-text">React</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#参考"><span class="toc-number">1.0.1.</span> <span class="toc-text">参考</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#参考-1"><span class="toc-number">1.0.2.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考链接"><span class="toc-number">1.1.</span> <span class="toc-text">参考链接</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><ol>
+<li>它是什么？能做什么？<br>React 是专注于复杂 UI 层业务的前端框架， 基于 Virtual DOM 的 diff 渲染以最小的代价来更新 dom(高效渲染)。</li>
+</ol>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<li><a href="https://www.zhihu.com/question/31809713" target="_blank" rel="noopener">网上都说操作真实 DOM 慢，但测试结果却比 React 更快，为什么？
+</a></li>
+<li><a href="https://stackoverflow.com/questions/21109361/why-is-reacts-concept-of-virtual-dom-said-to-be-more-performant-than-dirty-mode/23995928#23995928" target="_blank" rel="noopener">stackoverflow virtual-dom 作者回答</a></li>
+</ul>
+<ol start="2">
+<li>它存在的理由是什么？解决了什么样的问题、满足了什么样的需求？</li>
+</ol>
+<ul>
+<li>数据驱动的 Component</li>
+<li>virtual dom</li>
+<li>生命周期</li>
+<li>工程化思想</li>
+</ul>
+<h4 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h4><ul>
+<li><a href="https://www.zhihu.com/question/47161776" target="_blank" rel="noopener">我们为什么需要 React？</a></li>
+</ul>
+<ol start="3">
+<li>它的适用场景是什么？优缺点是什么？</li>
+</ol>
+<ul>
+<li>大型项目，前端层复杂<blockquote>
+<p>缺点：单独 UI 层的薄弱性，需要采用整个技术栈(过渡不够平滑)</p>
+</blockquote>
+</li>
+</ul>
+<ol start="4">
+<li>它怎么用？最佳实践是什么？</li>
+<li>它的原理是什么？<br>本身相当于 mvc 结构中的 v 层,并非 MVVM ，借助自建的事件机制和单向数据流实现更新，Virtual DOM 应用 + jsx</li>
+</ol>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
+<li><a href="https://www.jianshu.com/p/12daf3731f9e" target="_blank" rel="noopener">https://www.jianshu.com/p/12daf3731f9e</a></li>
+<li><a href="https://blog.csdn.net/u013510838/article/details/61224760" target="_blank" rel="noopener">https://blog.csdn.net/u013510838/article/details/61224760</a></li>
+<li><a href="http://web.jobbole.com/87538/" target="_blank" rel="noopener">http://web.jobbole.com/87538/</a></li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/观点与感想/">观点与感想</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://xiaoyueyue.org/2019/05/14/我到底为什么要使用react等前端框架？/" data-title="我到底为什么要使用react等前端框架？ | RainBow&#39;s Blog" data-tsina class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2019/05/14/使用fis3构建工程化项目/" title="使用fis3构建工程化项目">
+  <strong>上一篇：</strong><br>
+  <span>
+  使用fis3构建工程化项目</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/05/14/排序算法/" title="排序算法">
+ <strong>下一篇：</strong><br> 
+ <span>排序算法
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#React"><span class="toc-number">1.</span> <span class="toc-text">React</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#参考"><span class="toc-number">1.0.1.</span> <span class="toc-text">参考</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#参考-1"><span class="toc-number">1.0.2.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考链接"><span class="toc-number">1.1.</span> <span class="toc-text">参考链接</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="xiaoyueyue165" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Javascript/" title="Javascript">Javascript<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/开发者笔记/" title="开发者笔记">开发者笔记<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Css/" title="Css">Css<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/拥抱开源/" title="拥抱开源">拥抱开源<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Interview/" title="Interview">Interview<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/React/" title="React">React<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/理解计算机/" title="理解计算机">理解计算机<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/观点与感想/" title="观点与感想">观点与感想<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">关注博客</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank" title="阮一峰的网络日志">阮一峰的网络日志</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.barretlee.com/entry/" target="_blank" title="小胡子哥的博客">小胡子哥的博客</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">关注唱吧</p>
+    <ul>
+        
+          <li class="changba_li">
+            
+            <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/874670453_200_200.jpg">
+            
+            
+            	<a class="changba_a" href="http://changba.com/u/104571671" target="_blank" title="琳琳abcdefg">琳琳abcdefg</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+              <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/463875924_200_200.jpg">
+            
+            
+            	<a class="changba_a" href="http://changba.com/u/193189028" target="_blank" title="Vesp3r">Vesp3r</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+               <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/880681979_200_200.jpg">
+             
+            
+            	<a class="changba_a" href="http://changba.com/u/21968651" target="_blank" title="大崇崇Zebra">大崇崇Zebra</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+                  <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/448860018_200_200.jpg">
+             
+            
+            	<a class="changba_a" href="http://changba.com/u/39302742" target="_blank" title="基督徒小越越">基督徒小越越</a>
+            
+          </image></li>
+        
+    </ul>
+</div>
+
+
+  
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m a Front-end developer. <br>
+			This is my blog,and my life is brilliant.</p>
+	</section>
+	 
+	<div class="social-font">
+		
+		
+		<a href="https://github.com/xiaoyueyue165" target="_blank" class="icon-github" title="github"></a>
+    
+    
+      <a href="http://changba.com/u/39302742" target="_blank" class="icon-changba" title="changba"></a>
+      
+		
+		
+		<a href="https://twitter.com/yanyueyou" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:xiaoyueyue165@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019
+		
+		<a href="/about" target="_blank" title="Xiaoyueyue">Xiaoyueyue</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

@@ -1,0 +1,684 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>front-end-interview-handbook JS问题 | RainBow&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Xiaoyueyue">
+    
+
+    
+    <meta name="description" content="前言使用《Javascript 高级程序设计》的章节目录对front-end-interview-handbook项目的 javascript 问题进行了系统的划分整理,试着回答，日后可以考虑做扩展。 第 3 章 基本概念null、undefined和未声明变量之间有什么区别？如何检查判断这些状态值？当没有使用 var,let,const 等申明变量，就为一个变量进行赋值，该变量就是未声明的变量。">
+<meta name="keywords" content="Interview,Javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="front-end-interview-handbook JS问题">
+<meta property="og:url" content="https://xiaoyueyue.org/2019/05/14/front-end-interview-handbook JS问题/index.html">
+<meta property="og:site_name" content="RainBow&#39;s Blog">
+<meta property="og:description" content="前言使用《Javascript 高级程序设计》的章节目录对front-end-interview-handbook项目的 javascript 问题进行了系统的划分整理,试着回答，日后可以考虑做扩展。 第 3 章 基本概念null、undefined和未声明变量之间有什么区别？如何检查判断这些状态值？当没有使用 var,let,const 等申明变量，就为一个变量进行赋值，该变量就是未声明的变量。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://xiaoyueyue165.github.io/static/blog/prototype.png">
+<meta property="og:updated_time" content="2019-05-21T02:06:57.021Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="front-end-interview-handbook JS问题">
+<meta name="twitter:description" content="前言使用《Javascript 高级程序设计》的章节目录对front-end-interview-handbook项目的 javascript 问题进行了系统的划分整理,试着回答，日后可以考虑做扩展。 第 3 章 基本概念null、undefined和未声明变量之间有什么区别？如何检查判断这些状态值？当没有使用 var,let,const 等申明变量，就为一个变量进行赋值，该变量就是未声明的变量。">
+<meta name="twitter:image" content="https://xiaoyueyue165.github.io/static/blog/prototype.png">
+<meta name="twitter:creator" content="@yanyueyou">
+
+    
+    <link rel="alternative" href="/atom.xml" title="RainBow&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.jpg" alt="RainBow&#39;s Blog" title="RainBow&#39;s Blog"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="RainBow&#39;s Blog">RainBow&#39;s Blog</a></h1>
+				<h2 class="blog-motto">余则缊袍敝衣处其间，略无慕艳意。以中有足乐者，不知口体之奉不若人也！</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/todolist">TodoList</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
+						<input type="hidden" name="q" value="site:xiaoyueyue.org">
+					</form>
+					
+					</li>
+				</ul>
+			</ul></nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/05/14/front-end-interview-handbook JS问题/" title="front-end-interview-handbook JS问题" itemprop="url">front-end-interview-handbook JS问题</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Xiaoyueyue" target="_blank" itemprop="author">Xiaoyueyue</a>
+		
+  </p><p class="article-time">
+    <time datetime="2019-05-14T05:49:06.721Z" itemprop="datePublished"> 发表于 2019-05-14 13:49:06</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-3-章-基本概念"><span class="toc-number">2.</span> <span class="toc-text">第 3 章 基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#null、undefined和未声明变量之间有什么区别？如何检查判断这些状态值？"><span class="toc-number">2.1.</span> <span class="toc-text">null、undefined和未声明变量之间有什么区别？如何检查判断这些状态值？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#和-的区别是什么？"><span class="toc-number">2.2.</span> <span class="toc-text">==和===的区别是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用let、var和const创建变量有什么区别？"><span class="toc-number">2.3.</span> <span class="toc-text">使用let、var和const创建变量有什么区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么不要使用全局作用域？"><span class="toc-number">2.4.</span> <span class="toc-text">为什么不要使用全局作用域？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是”use-strict”-？使用它有什么优缺点？"><span class="toc-number">2.5.</span> <span class="toc-text">什么是”use strict”;？使用它有什么优缺点？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#参考"><span class="toc-number">2.5.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-4-章-变量，作用域和内存问题"><span class="toc-number">3.</span> <span class="toc-text">第 4 章 变量，作用域和内存问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#请解释变量提升（hosting）"><span class="toc-number">3.1.</span> <span class="toc-text">请解释变量提升（hosting）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-5-章-引用类型"><span class="toc-number">4.</span> <span class="toc-text">第 5 章 引用类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#请说明-forEach循环和-map-循环的主要区别，它们分别在什么情况下使用？"><span class="toc-number">4.1.</span> <span class="toc-text">请说明.forEach循环和.map()循环的主要区别，它们分别在什么情况下使用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#宿主对象（host-objects）和原生对象（native-objects）的区别是什么？"><span class="toc-number">4.2.</span> <span class="toc-text">宿主对象（host objects）和原生对象（native objects）的区别是什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-6-章-面向对象的程序设计"><span class="toc-number">5.</span> <span class="toc-text">第 6 章 面向对象的程序设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#请解释原型继承（prototypal-inheritance）的工作原理"><span class="toc-number">5.1.</span> <span class="toc-text">请解释原型继承（prototypal inheritance）的工作原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-7-章-函数表达式"><span class="toc-number">6.</span> <span class="toc-text">第 7 章 函数表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#请简述JavaScript中的this"><span class="toc-number">6.1.</span> <span class="toc-text">请简述JavaScript中的this</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是闭包（closure），为什么使用闭包？"><span class="toc-number">6.2.</span> <span class="toc-text">什么是闭包（closure），为什么使用闭包？</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#为什么使用闭包？"><span class="toc-number">6.2.0.1.</span> <span class="toc-text">为什么使用闭包？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#参考-1"><span class="toc-number">6.2.0.2.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匿名函数的典型应用场景是什么"><span class="toc-number">6.3.</span> <span class="toc-text">匿名函数的典型应用场景是什么?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#你如何组织自己的代码？使用模块模式（module-pattern）还是经典继承（classical-inheritance）？"><span class="toc-number">6.4.</span> <span class="toc-text">你如何组织自己的代码？使用模块模式（module pattern）还是经典继承（classical inheritance）？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下列语句有什么区别：function-Person-、var-person-Person-和var-person-new-Person-？"><span class="toc-number">6.5.</span> <span class="toc-text">下列语句有什么区别：function Person(){}、var person = Person()和var person = new Person()？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#call和-apply有什么区别？"><span class="toc-number">6.6.</span> <span class="toc-text">.call和.apply有什么区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请说明Function-prototype-bind的用法"><span class="toc-number">6.7.</span> <span class="toc-text">请说明Function.prototype.bind的用法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#参考-2"><span class="toc-number">6.7.0.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#请解释同步和异步函数之间的区别"><span class="toc-number">6.8.</span> <span class="toc-text">请解释同步和异步函数之间的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请解释function-foo-和var-foo-function-之间foo的用法上的区别。"><span class="toc-number">6.9.</span> <span class="toc-text">请解释function foo() {}和var foo = function() {}之间foo的用法上的区别。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-10-章-DOM"><span class="toc-number">7.</span> <span class="toc-text">第 10 章 DOM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#“attribute”-和-“property”-之间有什么区别？"><span class="toc-number">7.1.</span> <span class="toc-text">“attribute” 和 “property” 之间有什么区别？</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#参考-3"><span class="toc-number">7.1.0.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#document-中的load事件和DOMContentLoaded事件之间的区别是什么？"><span class="toc-number">7.2.</span> <span class="toc-text">document 中的load事件和DOMContentLoaded事件之间的区别是什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#参考-4"><span class="toc-number">7.2.0.1.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要使用load事件？这个事件有什么缺点吗？你知道一些代替方案吗，为什么使用它们？"><span class="toc-number">7.3.</span> <span class="toc-text">为什么要使用load事件？这个事件有什么缺点吗？你知道一些代替方案吗，为什么使用它们？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-13-章-事件"><span class="toc-number">8.</span> <span class="toc-text">第 13 章 事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#请解释事件委托（event-delegation）"><span class="toc-number">8.1.</span> <span class="toc-text">请解释事件委托（event delegation）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请描述事件冒泡"><span class="toc-number">8.2.</span> <span class="toc-text">请描述事件冒泡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是事件循环？调用堆栈和任务队列之间有什么区别？"><span class="toc-number">8.3.</span> <span class="toc-text">什么是事件循环？调用堆栈和任务队列之间有什么区别？</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#参考-5"><span class="toc-number">8.3.0.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-21-章-Ajax-与-Comet"><span class="toc-number">9.</span> <span class="toc-text">第 21 章 Ajax 与 Comet</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#请解释关于-JavaScript-的同源策略"><span class="toc-number">9.1.</span> <span class="toc-text">请解释关于 JavaScript 的同源策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#参考-6"><span class="toc-number">9.1.1.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请尽可能详细地解释-Ajax"><span class="toc-number">9.2.</span> <span class="toc-text">请尽可能详细地解释 Ajax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-Ajax-的优缺点分别是什么？"><span class="toc-number">9.3.</span> <span class="toc-text">使用 Ajax 的优缺点分别是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请说明-JSONP-的工作原理，它为什么不是真正的-Ajax？"><span class="toc-number">9.4.</span> <span class="toc-text">请说明 JSONP 的工作原理，它为什么不是真正的 Ajax？</span></a></li></ol></li>
+		
+		</div>
+		
+		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>使用《Javascript 高级程序设计》的章节目录对<a href="https://github.com/yangshun/front-end-interview-handbook/blob/master/Translations/Chinese/questions/javascript-questions.md" target="_blank" rel="noopener">front-end-interview-handbook</a>项目的 javascript 问题进行了系统的划分整理,试着回答，日后可以考虑做扩展。</p>
+<h2 id="第-3-章-基本概念"><a href="#第-3-章-基本概念" class="headerlink" title="第 3 章 基本概念"></a>第 3 章 基本概念</h2><h3 id="null、undefined和未声明变量之间有什么区别？如何检查判断这些状态值？"><a href="#null、undefined和未声明变量之间有什么区别？如何检查判断这些状态值？" class="headerlink" title="null、undefined和未声明变量之间有什么区别？如何检查判断这些状态值？"></a><code>null</code>、<code>undefined</code>和未声明变量之间有什么区别？如何检查判断这些状态值？</h3><p>当没有使用 var,let,const 等申明变量，就为一个变量进行赋值，该变量就是未声明的变量。未声明的变量会当做在全局作用域下定义的变量。在严格模式下，给未声明的变量进行赋值，会抛出 ReferenceError 错误。和使用全局变量一样，应尽量避免使用.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">"use strict"</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  x = <span class="number">1</span>; <span class="comment">// 在严格模式下，抛出 ReferenceError:x is not defined 错误</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo();</span><br><span class="line"><span class="built_in">console</span>.log(x); <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<p>当一个变量已经被声明，却没有进行赋值操作，该变量值为 undefined。如果一个函数的执行结果被赋值给一个变量，但是却没有任何返回值，那么该变量的值为 undefined。要检查它，需要使用严格相等或是 typeof，它会返回 undefined 字符串。但是不要使用非严格相等来检查，因为如果变量的值为 null，使用非严格相等也会返回 true；</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo;</span><br><span class="line"><span class="built_in">console</span>.log(foo); <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(foo === <span class="literal">undefined</span>); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> foo === <span class="string">"undefined"</span>); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(foo == <span class="literal">null</span>); <span class="comment">// true. 错误，不要使用非严格相等！</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="keyword">var</span> baz = bar();</span><br><span class="line"><span class="built_in">console</span>.log(baz); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>null 只能显式的被赋值给变量，表示空值。要检查判断 null 的值，也要使用严格相等来判断。在这里不能使用非严格相等来判断，因为如果变量值为 undefined，使用非严格相等也返回 true;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">console</span>.log(foo === <span class="literal">null</span>); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(foo == <span class="literal">undefined</span>); <span class="comment">// true. 错误，不要使用非严格相等！</span></span><br></pre></td></tr></table></figure>
+<p>不要使用未声明的变量，定义暂时没有值的变量，使用 null 来为它们赋值。</p>
+<h3 id="和-的区别是什么？"><a href="#和-的区别是什么？" class="headerlink" title="==和===的区别是什么？"></a><code>==</code>和<code>===</code>的区别是什么？</h3><p><code>==</code>是抽象相等运算符，而<code>===</code>是严格相等运算符。</p>
+<p><code>==</code>运算符是在进行必要的类型转换后，再比较。<code>===</code>运算符不会进行类型转换，所以如果两个值不是相同的类型，会直接返回 false。使用==时，可能发生一些特别的事情，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> == <span class="string">"1"</span>; <span class="comment">// true</span></span><br><span class="line"><span class="number">1</span> == [<span class="number">1</span>]; <span class="comment">// true</span></span><br><span class="line"><span class="number">1</span> == <span class="literal">true</span>; <span class="comment">// true</span></span><br><span class="line"><span class="number">0</span> == <span class="string">""</span>; <span class="comment">// true</span></span><br><span class="line"><span class="number">0</span> == <span class="string">"0"</span>; <span class="comment">// true</span></span><br><span class="line"><span class="number">0</span> == <span class="literal">false</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>建议是从不使用==运算符，除了方便与 null 或 undefined 比较时，a == null 如果 a 为 null 或 undefined 将返回 true。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a == <span class="literal">null</span>); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(a == <span class="literal">undefined</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用let、var和const创建变量有什么区别？"><a href="#使用let、var和const创建变量有什么区别？" class="headerlink" title="使用let、var和const创建变量有什么区别？"></a>使用<code>let</code>、<code>var</code>和<code>const</code>创建变量有什么区别？</h3><p>用 var 声明的变量的作用域是它当前的执行上下文，它可以是嵌套的函数，也可以是声明在任何函数外的变量。let 和 const 是块级作用域，意味着它们只能在最近的一组花括号（function、if-else 代码块或 for 循环中）中访问。var 可以变量声明提升，let 和 const 不会进行变量声明提升。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 所有变量在函数中都可访问</span></span><br><span class="line">  <span class="keyword">var</span> bar = <span class="string">"bar"</span>;</span><br><span class="line">  <span class="keyword">let</span> baz = <span class="string">"baz"</span>;</span><br><span class="line">  <span class="keyword">const</span> qux = <span class="string">"qux"</span>;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(bar); <span class="comment">// bar</span></span><br><span class="line">  <span class="built_in">console</span>.log(baz); <span class="comment">// baz</span></span><br><span class="line">  <span class="built_in">console</span>.log(qux); <span class="comment">// qux</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(bar); <span class="comment">// ReferenceError: bar is not defined</span></span><br><span class="line"><span class="built_in">console</span>.log(baz); <span class="comment">// ReferenceError: baz is not defined</span></span><br><span class="line"><span class="built_in">console</span>.log(qux); <span class="comment">// ReferenceError: qux is not defined</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> bar = <span class="string">"bar"</span>;</span><br><span class="line">  <span class="keyword">let</span> baz = <span class="string">"baz"</span>;</span><br><span class="line">  <span class="keyword">const</span> qux = <span class="string">"qux"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用 var 声明的变量在函数作用域上都可访问</span></span><br><span class="line"><span class="built_in">console</span>.log(bar); <span class="comment">// bar</span></span><br><span class="line"><span class="comment">// let 和 const 定义的变量在它们被定义的语句块之外不可访问</span></span><br><span class="line"><span class="built_in">console</span>.log(baz); <span class="comment">// ReferenceError: baz is not defined</span></span><br><span class="line"><span class="built_in">console</span>.log(qux); <span class="comment">// ReferenceError: qux is not defined</span></span><br></pre></td></tr></table></figure>
+<p>var 会使变量提升，这意味着变量可以在声明之前使用。let 和 const 不会使变量提升，提前使用会报错。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(foo); <span class="comment">// undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = <span class="string">"foo"</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(baz); <span class="comment">// ReferenceError: can't access lexical declaration 'baz' before initialization</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> baz = <span class="string">"baz"</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(bar); <span class="comment">// ReferenceError: can't access lexical declaration 'bar' before initialization</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> bar = <span class="string">"bar"</span>;</span><br></pre></td></tr></table></figure>
+<p>用 var 重复声明不会报错，但 let 和 const 会。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="string">"foo"</span>;</span><br><span class="line"><span class="keyword">var</span> foo = <span class="string">"bar"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(foo); <span class="comment">// "bar"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> baz = <span class="string">"baz"</span>;</span><br><span class="line"><span class="keyword">let</span> baz = <span class="string">"qux"</span>; <span class="comment">// Uncaught SyntaxError: Identifier 'baz' has already been declared</span></span><br></pre></td></tr></table></figure>
+<p>let 和 const 的区别在于：let 允许多次赋值，而 const 只允许一次。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这样不会报错。</span></span><br><span class="line"><span class="keyword">let</span> foo = <span class="string">"foo"</span>;</span><br><span class="line">foo = <span class="string">"bar"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这样会报错。</span></span><br><span class="line"><span class="keyword">const</span> baz = <span class="string">"baz"</span>;</span><br><span class="line">baz = <span class="string">"qux"</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="为什么不要使用全局作用域？"><a href="#为什么不要使用全局作用域？" class="headerlink" title="为什么不要使用全局作用域？"></a>为什么不要使用全局作用域？</h3><p>每个脚本都可以访问全局作用域，如果人人都使用全局命名空间来定义自己的变量，肯定会发生冲突。使用模块模式（IIFE）将变量封装在本地命名空间中。</p>
+<h3 id="什么是”use-strict”-？使用它有什么优缺点？"><a href="#什么是”use-strict”-？使用它有什么优缺点？" class="headerlink" title="什么是”use strict”;？使用它有什么优缺点？"></a>什么是”use strict”;？使用它有什么优缺点？</h3><p>‘use strict’ 是用于对整个脚本或单个函数启用严格模式的语句。严格模式是可选择的一个限制 JavaScript 的变体一种方式 。</p>
+<p>优点：</p>
+<ul>
+<li>无法再意外创建全局变量。</li>
+<li>会使引起静默失败（silently fail，即：不报错也没有任何效果）的赋值操抛出异常。</li>
+<li>试图删除不可删除的属性时会抛出异常（之前这种操作不会产生任何效果）。</li>
+<li>要求函数的参数名唯一。</li>
+<li>全局作用域下，this 的值为 undefined。</li>
+<li>捕获了一些常见的编码错误，并抛出异常。</li>
+<li>禁用令人困惑或欠佳的功能。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>缺失许多开发人员已经习惯的功能。</li>
+<li>无法访问 function.caller 和 function.arguments。</li>
+<li>以不同严格模式编写的脚本合并后可能导致问题。</li>
+</ul>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<li><a href="http://2ality.com/2011/10/strict-mode-hatred.html" target="_blank" rel="noopener">http://2ality.com/2011/10/strict-mode-hatred.html</a></li>
+<li><a href="http://lucybain.com/blog/2014/js-use-strict/" target="_blank" rel="noopener">http://lucybain.com/blog/2014/js-use-strict/</a></li>
+</ul>
+<h2 id="第-4-章-变量，作用域和内存问题"><a href="#第-4-章-变量，作用域和内存问题" class="headerlink" title="第 4 章 变量，作用域和内存问题"></a>第 4 章 变量，作用域和内存问题</h2><h3 id="请解释变量提升（hosting）"><a href="#请解释变量提升（hosting）" class="headerlink" title="请解释变量提升（hosting）"></a>请解释变量提升（hosting）</h3><p>变量提升（hoisting）是用于解释代码中变量声明行为的术语。在 js 代码执行的时候，会把使用<code>var</code> 定义的还有<code>function a(){}</code>声明式函数提升到前面，然后依次根据代码的执行顺序，函数声明后全局范围作用域内可以调用使用，而变量声明需要等到赋值完毕才会有值。</p>
+<h2 id="第-5-章-引用类型"><a href="#第-5-章-引用类型" class="headerlink" title="第 5 章 引用类型"></a>第 5 章 引用类型</h2><h3 id="请说明-forEach循环和-map-循环的主要区别，它们分别在什么情况下使用？"><a href="#请说明-forEach循环和-map-循环的主要区别，它们分别在什么情况下使用？" class="headerlink" title="请说明.forEach循环和.map()循环的主要区别，它们分别在什么情况下使用？"></a>请说明<code>.forEach</code>循环和<code>.map()</code>循环的主要区别，它们分别在什么情况下使用？</h3><p>forEach 没有返回值，不改变原数组；<br>map 方法返回更改后的原数组</p>
+<h3 id="宿主对象（host-objects）和原生对象（native-objects）的区别是什么？"><a href="#宿主对象（host-objects）和原生对象（native-objects）的区别是什么？" class="headerlink" title="宿主对象（host objects）和原生对象（native objects）的区别是什么？"></a>宿主对象（host objects）和原生对象（native objects）的区别是什么？</h3><p>范围不同，宿主对象是有宿主提供的对象，理解为 js 的运行环境衍生出来的对象，如浏览器的 window 对象，Bom 及 Dom 对象</p>
+<p>原生对象是 js 语法里面涵盖的对象，Object、Function、Array、String、Boolean、Number、Date、RegExp、Error、EvalError、RangeError、ReferenceError、SyntaxError、TypeError、URIError、Global</p>
+<h2 id="第-6-章-面向对象的程序设计"><a href="#第-6-章-面向对象的程序设计" class="headerlink" title="第 6 章 面向对象的程序设计"></a>第 6 章 面向对象的程序设计</h2><h3 id="请解释原型继承（prototypal-inheritance）的工作原理"><a href="#请解释原型继承（prototypal-inheritance）的工作原理" class="headerlink" title="请解释原型继承（prototypal inheritance）的工作原理"></a>请解释原型继承（prototypal inheritance）的工作原理</h3><p>在 function,Object,Array，String 等的数据类型上有一些功能型的原型方法，当这些功能型的方法不是必须的，而且如果每 new 一个对象上都会绑定这些方法从而引发内存的消耗，这时候我们把方法定义到原型上面，透过原型链来进行访问使用，在这些定义的原型方法上面，我们都保持着同一个指针时的调用路径，不会再开辟内存。</p>
+<p><img src="https://xiaoyueyue165.github.io/static/blog/prototype.png" alt="image"></p>
+<h2 id="第-7-章-函数表达式"><a href="#第-7-章-函数表达式" class="headerlink" title="第 7 章 函数表达式"></a>第 7 章 函数表达式</h2><h3 id="请简述JavaScript中的this"><a href="#请简述JavaScript中的this" class="headerlink" title="请简述JavaScript中的this"></a>请简述<code>JavaScript</code>中的<code>this</code></h3><ul>
+<li><a href="https://github.com/xiaoyueyue165/blog/issues/18" target="_blank" rel="noopener">Javascript 中的 this 指向</a></li>
+</ul>
+<h3 id="什么是闭包（closure），为什么使用闭包？"><a href="#什么是闭包（closure），为什么使用闭包？" class="headerlink" title="什么是闭包（closure），为什么使用闭包？"></a>什么是闭包（closure），为什么使用闭包？</h3><p>闭包是函数和声明该函数的词法环境的组合。可以使在内部定义的函数方法使用父函数中的声明的变量继续操作。</p>
+<h5 id="为什么使用闭包？"><a href="#为什么使用闭包？" class="headerlink" title="为什么使用闭包？"></a>为什么使用闭包？</h5><p>用闭包模拟私有方法，使用闭包来定义公共函数，并令其可以访问私有函数和变量，也称为 模块模式;</p>
+<h5 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h5><ul>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures</a></li>
+</ul>
+<h3 id="匿名函数的典型应用场景是什么"><a href="#匿名函数的典型应用场景是什么" class="headerlink" title="匿名函数的典型应用场景是什么?"></a>匿名函数的典型应用场景是什么?</h3><p>匿名函数用作立即执行函数</p>
+<p>匿名函数可以用于函数式编程或 Lodash（类似于回调函数）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">const</span> double = arr.map(<span class="function"><span class="keyword">function</span>(<span class="params">el</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> el * <span class="number">2</span>;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(double); <span class="comment">// [2, 4, 6]</span></span><br></pre></td></tr></table></figure>
+<h3 id="你如何组织自己的代码？使用模块模式（module-pattern）还是经典继承（classical-inheritance）？"><a href="#你如何组织自己的代码？使用模块模式（module-pattern）还是经典继承（classical-inheritance）？" class="headerlink" title="你如何组织自己的代码？使用模块模式（module pattern）还是经典继承（classical inheritance）？"></a>你如何组织自己的代码？使用模块模式（module pattern）还是经典继承（classical inheritance）？</h3><p><a href="https://github.com/xiaoyueyue165/blog/issues/17" target="_blank" rel="noopener">js 的继承模式</a>,经典继承大概是构造函数继承</p>
+<p>使用模块模式，如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> application = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">//private variables and functions</span></span><br><span class="line">  <span class="keyword">var</span> components = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">//initialization</span></span><br><span class="line">  components.push(<span class="keyword">new</span> BaseComponent());</span><br><span class="line"></span><br><span class="line">  <span class="comment">//create a local copy of application</span></span><br><span class="line">  <span class="keyword">var</span> app = <span class="keyword">new</span> BaseComponent();</span><br><span class="line"></span><br><span class="line">  <span class="comment">//public interface</span></span><br><span class="line">  app.getComponentCount = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> components.length;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  app.registerComponent = <span class="function"><span class="keyword">function</span>(<span class="params">component</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> component == <span class="string">"object"</span>) &#123;</span><br><span class="line">      components.push(component);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//return it</span></span><br><span class="line">  <span class="keyword">return</span> app;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<h3 id="下列语句有什么区别：function-Person-、var-person-Person-和var-person-new-Person-？"><a href="#下列语句有什么区别：function-Person-、var-person-Person-和var-person-new-Person-？" class="headerlink" title="下列语句有什么区别：function Person(){}、var person = Person()和var person = new Person()？"></a>下列语句有什么区别：<code>function Person(){}</code>、<code>var person = Person()</code>和<code>var person = new Person()</code>？</h3><p><code>var person = Person()</code>是把函数当做普通函数来调用</p>
+<p><code>var person = new Person()</code>使用 new 操作符，创建 Person 对象的实例，该实例继承自 Person.prototype。另外一种方式是使用 Object.create，例如：Object.create(Person.prototype)`。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person = Person(<span class="string">"John"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(person); <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(person.name); <span class="comment">// Uncaught TypeError: Cannot read property 'name' of undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person(<span class="string">"John"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(person); <span class="comment">// Person &#123; name: "John" &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(person.name); <span class="comment">// "john"</span></span><br></pre></td></tr></table></figure>
+<h3 id="call和-apply有什么区别？"><a href="#call和-apply有什么区别？" class="headerlink" title=".call和.apply有什么区别？"></a><code>.call</code>和<code>.apply</code>有什么区别？</h3><p>.call 和.apply 都用于调用函数，第一个参数将用作函数内 this 的值。然而，.call 接受逗号分隔的参数作为后面的参数，而.apply 接受一个参数数组作为后面的参数。</p>
+<p>一个简单的记忆方法是，从 call 中的 C 联想到逗号分隔（comma-separated），从 apply 中的 A 联想到数组（array）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(add.call(<span class="literal">null</span>, <span class="number">1</span>, <span class="number">2</span>)); <span class="comment">// 3</span></span><br><span class="line"><span class="built_in">console</span>.log(add.apply(<span class="literal">null</span>, [<span class="number">1</span>, <span class="number">2</span>])); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<h3 id="请说明Function-prototype-bind的用法"><a href="#请说明Function-prototype-bind的用法" class="headerlink" title="请说明Function.prototype.bind的用法"></a>请说明<code>Function.prototype.bind</code>的用法</h3><p>bind()方法创建一个新的函数, 当被调用时，将其 this 关键字设置为提供的值，在调用新函数时，在任何提供之前提供一个给定的参数序列。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="built_in">module</span> = &#123;</span><br><span class="line">  x: <span class="number">42</span>,</span><br><span class="line">  getX: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.x;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> retrieveX = <span class="built_in">module</span>.getX;</span><br><span class="line"><span class="built_in">console</span>.log(retrieveX()); <span class="comment">// 获取全局范围的变量</span></span><br><span class="line"><span class="comment">// expected output: undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> boundGetX = retrieveX.bind(<span class="built_in">module</span>);</span><br><span class="line"><span class="built_in">console</span>.log(boundGetX());</span><br><span class="line"><span class="comment">// expected output: 42</span></span><br></pre></td></tr></table></figure>
+<h5 id="参考-2"><a href="#参考-2" class="headerlink" title="参考"></a>参考</h5><ul>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind</a></li>
+</ul>
+<h3 id="请解释同步和异步函数之间的区别"><a href="#请解释同步和异步函数之间的区别" class="headerlink" title="请解释同步和异步函数之间的区别"></a>请解释同步和异步函数之间的区别</h3><p>同步函数按照流程堵塞执行</p>
+<p>异步函数通常接收回调函数作为参数，在异步调用函数之后立即执行下一行，不堵塞执行，此时将异步调用的函数放入到事件队列里面，等到事件队列里面空闲的时候就以放入堆栈执行。</p>
+<h3 id="请解释function-foo-和var-foo-function-之间foo的用法上的区别。"><a href="#请解释function-foo-和var-foo-function-之间foo的用法上的区别。" class="headerlink" title="请解释function foo() {}和var foo = function() {}之间foo的用法上的区别。"></a>请解释<code>function foo() {}</code>和<code>var foo = function() {}</code>之间<code>foo</code>的用法上的区别。</h3><ul>
+<li><a href="https://github.com/xiaoyueyue165/blog/issues/10" target="_blank" rel="noopener">函数声明与函数表达式的区别</a></li>
+</ul>
+<h2 id="第-10-章-DOM"><a href="#第-10-章-DOM" class="headerlink" title="第 10 章 DOM"></a>第 10 章 DOM</h2><h3 id="“attribute”-和-“property”-之间有什么区别？"><a href="#“attribute”-和-“property”-之间有什么区别？" class="headerlink" title="“attribute” 和 “property” 之间有什么区别？"></a>“attribute” 和 “property” 之间有什么区别？</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> input = <span class="built_in">document</span>.querySelector(<span class="string">"input"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(input.getAttribute(<span class="string">"value"</span>)); <span class="comment">// Hello</span></span><br><span class="line"><span class="built_in">console</span>.log(input.value); <span class="comment">// Hello</span></span><br></pre></td></tr></table></figure>
+<p>但是在文本框中键入“ World!”后:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(input.getAttribute(<span class="string">"value"</span>)); <span class="comment">// Hello</span></span><br><span class="line"><span class="built_in">console</span>.log(input.value); <span class="comment">// Hello World!</span></span><br></pre></td></tr></table></figure>
+<h5 id="参考-3"><a href="#参考-3" class="headerlink" title="参考"></a>参考</h5><ul>
+<li><a href="https://stackoverflow.com/questions/6003819/what-is-the-difference-between-properties-and-attributes-in-html" target="_blank" rel="noopener">https://stackoverflow.com/questions/6003819/what-is-the-difference-between-properties-and-attributes-in-html</a></li>
+</ul>
+<h3 id="document-中的load事件和DOMContentLoaded事件之间的区别是什么？"><a href="#document-中的load事件和DOMContentLoaded事件之间的区别是什么？" class="headerlink" title="document 中的load事件和DOMContentLoaded事件之间的区别是什么？"></a>document 中的<code>load</code>事件和<code>DOMContentLoaded</code>事件之间的区别是什么？</h3><p>当初始的 HTML 文档被完全加载和解析完成之后，DOMContentLoaded 事件被触发，而无需等待样式表、图像和子框架的完成加载。</p>
+<p>window 的 load 事件仅在 DOM 和所有相关资源全部完成加载后才会触发。</p>
+<h5 id="参考-4"><a href="#参考-4" class="headerlink" title="参考"></a>参考</h5><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/Events/load" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/Events/load</a></li>
+</ul>
+<h3 id="为什么要使用load事件？这个事件有什么缺点吗？你知道一些代替方案吗，为什么使用它们？"><a href="#为什么要使用load事件？这个事件有什么缺点吗？你知道一些代替方案吗，为什么使用它们？" class="headerlink" title="为什么要使用load事件？这个事件有什么缺点吗？你知道一些代替方案吗，为什么使用它们？"></a>为什么要使用<code>load</code>事件？这个事件有什么缺点吗？你知道一些代替方案吗，为什么使用它们？</h3><p>在文档装载完成后会触发 load 事件。此时，在文档中的所有对象都在 DOM 中，所有图像、脚本、链接和子框架都完成了加载。</p>
+<p>DOM 事件 DOMContentLoaded 将在页面的 DOM 构建完成后触发，但不要等待其他资源完成加载。如果在初始化之前不需要装入整个页面，这个事件是使用首选。</p>
+<h2 id="第-13-章-事件"><a href="#第-13-章-事件" class="headerlink" title="第 13 章 事件"></a>第 13 章 事件</h2><h3 id="请解释事件委托（event-delegation）"><a href="#请解释事件委托（event-delegation）" class="headerlink" title="请解释事件委托（event delegation）"></a>请解释事件委托（event delegation）</h3><p>为父元素设置监听器，当子元素触发时，事件会冒泡到父元素上，监听器就会触发。好处：</p>
+<ul>
+<li>内存占用减少，因为只需要一个父元素的事件处理程序，而不必为每个后代都添加事件处理程序。</li>
+<li>无需从已删除的元素中解绑处理程序，也无需将处理程序绑定到新元素上。</li>
+</ul>
+<h3 id="请描述事件冒泡"><a href="#请描述事件冒泡" class="headerlink" title="请描述事件冒泡"></a>请描述事件冒泡</h3><p>当一个事件在 DOM 元素上触发时，如果有事件监听器，它将尝试处理该事件，然后事件冒泡到其父级元素，并发生同样的事情。最后直到事件到达祖先元素。事件冒泡是实现事件委托的原理（event delegation）。</p>
+<h3 id="什么是事件循环？调用堆栈和任务队列之间有什么区别？"><a href="#什么是事件循环？调用堆栈和任务队列之间有什么区别？" class="headerlink" title="什么是事件循环？调用堆栈和任务队列之间有什么区别？"></a>什么是事件循环？调用堆栈和任务队列之间有什么区别？</h3><p>事件循环是一个单线程循环，用于监视调用堆栈并检查是否有工作即将在任务队列中完成。如果调用堆栈为空并且任务队列中有回调函数，则将回调函数出队并推送到调用堆栈中执行。</p>
+<h5 id="参考-5"><a href="#参考-5" class="headerlink" title="参考"></a>参考</h5><ul>
+<li><a href="https://2014.jsconf.eu/speakers/philip-roberts-what-the-heck-is-the-event-loop-anyway.html" target="_blank" rel="noopener">https://2014.jsconf.eu/speakers/philip-roberts-what-the-heck-is-the-event-loop-anyway.html</a></li>
+<li><a href="http://theproactiveprogrammer.com/javascript/the-javascript-event-loop-a-stack-and-a-queue/" target="_blank" rel="noopener">http://theproactiveprogrammer.com/javascript/the-javascript-event-loop-a-stack-and-a-queue/</a></li>
+</ul>
+<h2 id="第-21-章-Ajax-与-Comet"><a href="#第-21-章-Ajax-与-Comet" class="headerlink" title="第 21 章 Ajax 与 Comet"></a>第 21 章 Ajax 与 Comet</h2><h3 id="请解释关于-JavaScript-的同源策略"><a href="#请解释关于-JavaScript-的同源策略" class="headerlink" title="请解释关于 JavaScript 的同源策略"></a>请解释关于 JavaScript 的同源策略</h3><p>同源策略可防止 JavaScript 发起跨域请求。源被定义为 URI、主机名和端口号的组合。此策略可防止页面上的恶意脚本通过该页面的文档对象模型，访问另一个网页上的敏感数据。</p>
+<h4 id="参考-6"><a href="#参考-6" class="headerlink" title="参考"></a>参考</h4><ul>
+<li><a href="https://en.wikipedia.org/wiki/Same-origin_policy" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Same-origin_policy</a></li>
+</ul>
+<h3 id="请尽可能详细地解释-Ajax"><a href="#请尽可能详细地解释-Ajax" class="headerlink" title="请尽可能详细地解释 Ajax"></a>请尽可能详细地解释 Ajax</h3><h3 id="使用-Ajax-的优缺点分别是什么？"><a href="#使用-Ajax-的优缺点分别是什么？" class="headerlink" title="使用 Ajax 的优缺点分别是什么？"></a>使用 Ajax 的优缺点分别是什么？</h3><h3 id="请说明-JSONP-的工作原理，它为什么不是真正的-Ajax？"><a href="#请说明-JSONP-的工作原理，它为什么不是真正的-Ajax？" class="headerlink" title="请说明 JSONP 的工作原理，它为什么不是真正的 Ajax？"></a>请说明 JSONP 的工作原理，它为什么不是真正的 Ajax？</h3><p>JSONP 通过<script>标签发送跨域请求，通常使用 callback 查询参数，例如：<a href="https://example.com?callback=printData。">https://example.com?callback=printData。</a> 然后服务器将数据包装在一个名为 printData 的函数中并将其返回给客户端。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- https:<span class="comment">//mydomain.com --&gt;</span></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printData</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`My name is <span class="subst">$&#123;data.name&#125;</span>!`</span>);</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;script src="https:/</span><span class="regexp">/example.com?callback=printData"&gt;&lt;/</span>script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//数据加载自 https://example.com?callback=printData</span></span><br><span class="line">printData(&#123; <span class="attr">name</span>: <span class="string">"Yang Shun"</span> &#125;);</span><br></pre></td></tr></table></figure>
+<p>现如今，<a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">跨来源资源共享（CORS）</a> 是推荐的主流方式，JSONP 已被视为一种比较 hack 的方式。</p>
+<h2 id="第-22-章-高级技巧"><a href="#第-22-章-高级技巧" class="headerlink" title="第 22 章 高级技巧"></a>第 22 章 高级技巧</h2><ul>
+<li>请解释可变对象和不可变对象之间的区别</li>
+<li>你能举出一个柯里化函数（curry function）的例子吗？它有哪些好处？</li>
+<li>高阶函数（higher-order）的定义是什么？</li>
+</ul>
+<h2 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h2><h3 id="Promise代替回调函数有什么优缺点？"><a href="#Promise代替回调函数有什么优缺点？" class="headerlink" title="Promise代替回调函数有什么优缺点？"></a><code>Promise</code>代替回调函数有什么优缺点？</h3><p>优点：</p>
+<ul>
+<li>避免可读性极差的回调地狱。</li>
+<li>使用.then()编写的顺序异步代码，既简单又易读。</li>
+<li>使用 Promise.all()编写并行异步代码变得很容易。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>轻微地增加了代码的复杂度（这点存在争议）。</li>
+<li>在不支持 ES2015 的旧版浏览器中，需要引入 polyfill 才能使用。</li>
+</ul>
+<h3 id="ES6-的类和-ES5-的构造函数有什么区别？"><a href="#ES6-的类和-ES5-的构造函数有什么区别？" class="headerlink" title="ES6 的类和 ES5 的构造函数有什么区别？"></a>ES6 的类和 ES5 的构造函数有什么区别？</h3><h3 id="你能给出一个使用箭头函数的例子吗，箭头函数与其他函数有什么不同？"><a href="#你能给出一个使用箭头函数的例子吗，箭头函数与其他函数有什么不同？" class="headerlink" title="你能给出一个使用箭头函数的例子吗，箭头函数与其他函数有什么不同？"></a>你能给出一个使用箭头函数的例子吗，箭头函数与其他函数有什么不同？</h3><h3 id="在构造函数中使用箭头函数有什么好处？"><a href="#在构造函数中使用箭头函数有什么好处？" class="headerlink" title="在构造函数中使用箭头函数有什么好处？"></a>在构造函数中使用箭头函数有什么好处？</h3><h3 id="请给出一个解构（destructuring）对象或数组的例子。"><a href="#请给出一个解构（destructuring）对象或数组的例子。" class="headerlink" title="请给出一个解构（destructuring）对象或数组的例子。"></a>请给出一个解构（destructuring）对象或数组的例子。</h3><h3 id="ES6-的模板字符串为生成字符串提供了很大的灵活性，你可以举个例子吗"><a href="#ES6-的模板字符串为生成字符串提供了很大的灵活性，你可以举个例子吗" class="headerlink" title="ES6 的模板字符串为生成字符串提供了很大的灵活性，你可以举个例子吗"></a>ES6 的模板字符串为生成字符串提供了很大的灵活性，你可以举个例子吗</h3><h3 id="使用扩展运算符（spread）的好处是什么，它与使用剩余参数语句（rest）有什么区别？"><a href="#使用扩展运算符（spread）的好处是什么，它与使用剩余参数语句（rest）有什么区别？" class="headerlink" title="使用扩展运算符（spread）的好处是什么，它与使用剩余参数语句（rest）有什么区别？"></a>使用扩展运算符（spread）的好处是什么，它与使用剩余参数语句（rest）有什么区别？</h3><h2 id="扩展性问题"><a href="#扩展性问题" class="headerlink" title="扩展性问题"></a>扩展性问题</h2><h3 id="说说你对-AMD-和-CommonJS-的了解。"><a href="#说说你对-AMD-和-CommonJS-的了解。" class="headerlink" title="说说你对 AMD 和 CommonJS 的了解。"></a>说说你对 AMD 和 CommonJS 的了解。</h3><h3 id="为什么扩展-JavaScript-内置对象是不好的做法？"><a href="#为什么扩展-JavaScript-内置对象是不好的做法？" class="headerlink" title="为什么扩展 JavaScript 内置对象是不好的做法？"></a>为什么扩展 JavaScript 内置对象是不好的做法？</h3><h3 id="请解释单页应用是什么，如何使其对-SEO-友好。"><a href="#请解释单页应用是什么，如何使其对-SEO-友好。" class="headerlink" title="请解释单页应用是什么，如何使其对 SEO 友好。"></a>请解释单页应用是什么，如何使其对 SEO 友好。</h3><h3 id="你使用什么语句遍历对象的属性和数组的元素？"><a href="#你使用什么语句遍历对象的属性和数组的元素？" class="headerlink" title="你使用什么语句遍历对象的属性和数组的元素？"></a>你使用什么语句遍历对象的属性和数组的元素？</h3><p>对象：</p>
+<p>for 循环：<code>for (var property in obj) { console.log(property); }</code>。但是，这还会遍历到它的继承属性，在使用之前，你需要加入<code>obj.hasOwnProperty(property)</code>检查。</p>
+<p>Object.keys()：<code>Object.keys(obj).forEach(function (property) { ... })</code>。Object.keys()方法会返回一个由一个给定对象的自身可枚举属性组成的数组。</p>
+<p>数组:<code>for (let i = 0; i &lt; arr.length; i++)</code></p>
+<h3 id="如何在文件之间共用代码？"><a href="#如何在文件之间共用代码？" class="headerlink" title="如何在文件之间共用代码？"></a>如何在文件之间共用代码？</h3><h3 id="什么情况下会用到静态类成员？"><a href="#什么情况下会用到静态类成员？" class="headerlink" title="什么情况下会用到静态类成员？"></a>什么情况下会用到静态类成员？</h3></script></p>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Interview/">Interview</a><a href="/tags/Javascript/">Javascript</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://xiaoyueyue.org/2019/05/14/front-end-interview-handbook JS问题/" data-title="front-end-interview-handbook JS问题 | RainBow&#39;s Blog" data-tsina class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2019/05/14/Javascript的继承模式/" title="Javascript的继承模式">
+  <strong>上一篇：</strong><br>
+  <span>
+  Javascript的继承模式</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/05/14/Css预处理器之-Sass/" title="Css预处理器之-Sass">
+ <strong>下一篇：</strong><br> 
+ <span>Css预处理器之-Sass
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-3-章-基本概念"><span class="toc-number">2.</span> <span class="toc-text">第 3 章 基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#null、undefined和未声明变量之间有什么区别？如何检查判断这些状态值？"><span class="toc-number">2.1.</span> <span class="toc-text">null、undefined和未声明变量之间有什么区别？如何检查判断这些状态值？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#和-的区别是什么？"><span class="toc-number">2.2.</span> <span class="toc-text">==和===的区别是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用let、var和const创建变量有什么区别？"><span class="toc-number">2.3.</span> <span class="toc-text">使用let、var和const创建变量有什么区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么不要使用全局作用域？"><span class="toc-number">2.4.</span> <span class="toc-text">为什么不要使用全局作用域？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是”use-strict”-？使用它有什么优缺点？"><span class="toc-number">2.5.</span> <span class="toc-text">什么是”use strict”;？使用它有什么优缺点？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#参考"><span class="toc-number">2.5.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-4-章-变量，作用域和内存问题"><span class="toc-number">3.</span> <span class="toc-text">第 4 章 变量，作用域和内存问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#请解释变量提升（hosting）"><span class="toc-number">3.1.</span> <span class="toc-text">请解释变量提升（hosting）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-5-章-引用类型"><span class="toc-number">4.</span> <span class="toc-text">第 5 章 引用类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#请说明-forEach循环和-map-循环的主要区别，它们分别在什么情况下使用？"><span class="toc-number">4.1.</span> <span class="toc-text">请说明.forEach循环和.map()循环的主要区别，它们分别在什么情况下使用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#宿主对象（host-objects）和原生对象（native-objects）的区别是什么？"><span class="toc-number">4.2.</span> <span class="toc-text">宿主对象（host objects）和原生对象（native objects）的区别是什么？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-6-章-面向对象的程序设计"><span class="toc-number">5.</span> <span class="toc-text">第 6 章 面向对象的程序设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#请解释原型继承（prototypal-inheritance）的工作原理"><span class="toc-number">5.1.</span> <span class="toc-text">请解释原型继承（prototypal inheritance）的工作原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-7-章-函数表达式"><span class="toc-number">6.</span> <span class="toc-text">第 7 章 函数表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#请简述JavaScript中的this"><span class="toc-number">6.1.</span> <span class="toc-text">请简述JavaScript中的this</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是闭包（closure），为什么使用闭包？"><span class="toc-number">6.2.</span> <span class="toc-text">什么是闭包（closure），为什么使用闭包？</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#为什么使用闭包？"><span class="toc-number">6.2.0.1.</span> <span class="toc-text">为什么使用闭包？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#参考-1"><span class="toc-number">6.2.0.2.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匿名函数的典型应用场景是什么"><span class="toc-number">6.3.</span> <span class="toc-text">匿名函数的典型应用场景是什么?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#你如何组织自己的代码？使用模块模式（module-pattern）还是经典继承（classical-inheritance）？"><span class="toc-number">6.4.</span> <span class="toc-text">你如何组织自己的代码？使用模块模式（module pattern）还是经典继承（classical inheritance）？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下列语句有什么区别：function-Person-、var-person-Person-和var-person-new-Person-？"><span class="toc-number">6.5.</span> <span class="toc-text">下列语句有什么区别：function Person(){}、var person = Person()和var person = new Person()？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#call和-apply有什么区别？"><span class="toc-number">6.6.</span> <span class="toc-text">.call和.apply有什么区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请说明Function-prototype-bind的用法"><span class="toc-number">6.7.</span> <span class="toc-text">请说明Function.prototype.bind的用法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#参考-2"><span class="toc-number">6.7.0.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#请解释同步和异步函数之间的区别"><span class="toc-number">6.8.</span> <span class="toc-text">请解释同步和异步函数之间的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请解释function-foo-和var-foo-function-之间foo的用法上的区别。"><span class="toc-number">6.9.</span> <span class="toc-text">请解释function foo() {}和var foo = function() {}之间foo的用法上的区别。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-10-章-DOM"><span class="toc-number">7.</span> <span class="toc-text">第 10 章 DOM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#“attribute”-和-“property”-之间有什么区别？"><span class="toc-number">7.1.</span> <span class="toc-text">“attribute” 和 “property” 之间有什么区别？</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#参考-3"><span class="toc-number">7.1.0.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#document-中的load事件和DOMContentLoaded事件之间的区别是什么？"><span class="toc-number">7.2.</span> <span class="toc-text">document 中的load事件和DOMContentLoaded事件之间的区别是什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#参考-4"><span class="toc-number">7.2.0.1.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要使用load事件？这个事件有什么缺点吗？你知道一些代替方案吗，为什么使用它们？"><span class="toc-number">7.3.</span> <span class="toc-text">为什么要使用load事件？这个事件有什么缺点吗？你知道一些代替方案吗，为什么使用它们？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-13-章-事件"><span class="toc-number">8.</span> <span class="toc-text">第 13 章 事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#请解释事件委托（event-delegation）"><span class="toc-number">8.1.</span> <span class="toc-text">请解释事件委托（event delegation）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请描述事件冒泡"><span class="toc-number">8.2.</span> <span class="toc-text">请描述事件冒泡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是事件循环？调用堆栈和任务队列之间有什么区别？"><span class="toc-number">8.3.</span> <span class="toc-text">什么是事件循环？调用堆栈和任务队列之间有什么区别？</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#参考-5"><span class="toc-number">8.3.0.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第-21-章-Ajax-与-Comet"><span class="toc-number">9.</span> <span class="toc-text">第 21 章 Ajax 与 Comet</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#请解释关于-JavaScript-的同源策略"><span class="toc-number">9.1.</span> <span class="toc-text">请解释关于 JavaScript 的同源策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#参考-6"><span class="toc-number">9.1.1.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请尽可能详细地解释-Ajax"><span class="toc-number">9.2.</span> <span class="toc-text">请尽可能详细地解释 Ajax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-Ajax-的优缺点分别是什么？"><span class="toc-number">9.3.</span> <span class="toc-text">使用 Ajax 的优缺点分别是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请说明-JSONP-的工作原理，它为什么不是真正的-Ajax？"><span class="toc-number">9.4.</span> <span class="toc-text">请说明 JSONP 的工作原理，它为什么不是真正的 Ajax？</span></a></li></ol></li>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="xiaoyueyue165" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Javascript/" title="Javascript">Javascript<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/开发者笔记/" title="开发者笔记">开发者笔记<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Css/" title="Css">Css<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/拥抱开源/" title="拥抱开源">拥抱开源<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Interview/" title="Interview">Interview<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/React/" title="React">React<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/理解计算机/" title="理解计算机">理解计算机<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/观点与感想/" title="观点与感想">观点与感想<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">关注博客</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank" title="阮一峰的网络日志">阮一峰的网络日志</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.barretlee.com/entry/" target="_blank" title="小胡子哥的博客">小胡子哥的博客</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">关注唱吧</p>
+    <ul>
+        
+          <li class="changba_li">
+            
+            <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/874670453_200_200.jpg">
+            
+            
+            	<a class="changba_a" href="http://changba.com/u/104571671" target="_blank" title="琳琳abcdefg">琳琳abcdefg</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+              <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/463875924_200_200.jpg">
+            
+            
+            	<a class="changba_a" href="http://changba.com/u/193189028" target="_blank" title="Vesp3r">Vesp3r</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+               <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/880681979_200_200.jpg">
+             
+            
+            	<a class="changba_a" href="http://changba.com/u/21968651" target="_blank" title="大崇崇Zebra">大崇崇Zebra</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+                  <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/448860018_200_200.jpg">
+             
+            
+            	<a class="changba_a" href="http://changba.com/u/39302742" target="_blank" title="基督徒小越越">基督徒小越越</a>
+            
+          </image></li>
+        
+    </ul>
+</div>
+
+
+  
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m a Front-end developer. <br>
+			This is my blog,and my life is brilliant.</p>
+	</section>
+	 
+	<div class="social-font">
+		
+		
+		<a href="https://github.com/xiaoyueyue165" target="_blank" class="icon-github" title="github"></a>
+    
+    
+      <a href="http://changba.com/u/39302742" target="_blank" class="icon-changba" title="changba"></a>
+      
+		
+		
+		<a href="https://twitter.com/yanyueyou" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:xiaoyueyue165@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019
+		
+		<a href="/about" target="_blank" title="Xiaoyueyue">Xiaoyueyue</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

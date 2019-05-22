@@ -1,0 +1,587 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>js编程风格 | RainBow&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Xiaoyueyue">
+    
+
+    
+    <meta name="description" content="框架能够让我们跑的更快，但只有了解原生的 JS 才能让我们走的更远。 1.单一var这条规则的意思是，把函数内部的所有变量，放到顶部声明。比如： 123456//示例function A() &amp;#123;  var a = 1,    b = 2,    c = a + b;&amp;#125; 优点：  便于查找函数内部使用的局部变量 防止变量未定义时就被使用 防止变量声明提升后引发的误解  关于第三点">
+<meta name="keywords" content="Javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js编程风格">
+<meta property="og:url" content="https://xiaoyueyue.org/2019/05/14/js编程风格/index.html">
+<meta property="og:site_name" content="RainBow&#39;s Blog">
+<meta property="og:description" content="框架能够让我们跑的更快，但只有了解原生的 JS 才能让我们走的更远。 1.单一var这条规则的意思是，把函数内部的所有变量，放到顶部声明。比如： 123456//示例function A() &amp;#123;  var a = 1,    b = 2,    c = a + b;&amp;#125; 优点：  便于查找函数内部使用的局部变量 防止变量未定义时就被使用 防止变量声明提升后引发的误解  关于第三点">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-21T02:06:57.026Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js编程风格">
+<meta name="twitter:description" content="框架能够让我们跑的更快，但只有了解原生的 JS 才能让我们走的更远。 1.单一var这条规则的意思是，把函数内部的所有变量，放到顶部声明。比如： 123456//示例function A() &amp;#123;  var a = 1,    b = 2,    c = a + b;&amp;#125; 优点：  便于查找函数内部使用的局部变量 防止变量未定义时就被使用 防止变量声明提升后引发的误解  关于第三点">
+<meta name="twitter:creator" content="@yanyueyou">
+
+    
+    <link rel="alternative" href="/atom.xml" title="RainBow&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.jpg" alt="RainBow&#39;s Blog" title="RainBow&#39;s Blog"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="RainBow&#39;s Blog">RainBow&#39;s Blog</a></h1>
+				<h2 class="blog-motto">余则缊袍敝衣处其间，略无慕艳意。以中有足乐者，不知口体之奉不若人也！</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/todolist">TodoList</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
+						<input type="hidden" name="q" value="site:xiaoyueyue.org">
+					</form>
+					
+					</li>
+				</ul>
+			</ul></nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/05/14/js编程风格/" title="js编程风格" itemprop="url">js编程风格</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Xiaoyueyue" target="_blank" itemprop="author">Xiaoyueyue</a>
+		
+  </p><p class="article-time">
+    <time datetime="2019-05-14T05:49:06.732Z" itemprop="datePublished"> 发表于 2019-05-14 13:49:06</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-单一var"><span class="toc-number">1.</span> <span class="toc-text">1.单一var</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-全局变量大写"><span class="toc-number">2.</span> <span class="toc-text">2.全局变量大写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-严格相等"><span class="toc-number">3.</span> <span class="toc-text">3.严格相等</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-for-循环缓存-length"><span class="toc-number">4.</span> <span class="toc-text">4.for 循环缓存 length</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-模块化"><span class="toc-number">5.</span> <span class="toc-text">5.模块化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#base-module"><span class="toc-number">5.0.1.</span> <span class="toc-text">base module</span></a></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#6-优化-if…else-嵌套"><span class="toc-number">6.</span> <span class="toc-text">6.优化 if…else 嵌套</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三元"><span class="toc-number">6.1.</span> <span class="toc-text">三元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#amp-amp-和"><span class="toc-number">6.2.</span> <span class="toc-text">&amp;&amp; 和 ||</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#参考"><span class="toc-number">6.2.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li>
+		
+		</div>
+		
+		<p>框架能够让我们跑的更快，但只有了解原生的 JS 才能让我们走的更远。</p>
+<h2 id="1-单一var"><a href="#1-单一var" class="headerlink" title="1.单一var"></a>1.单一<code>var</code></h2><p>这条规则的意思是，把函数内部的所有变量，放到顶部声明。比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//示例</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">1</span>,</span><br><span class="line">    b = <span class="number">2</span>,</span><br><span class="line">    c = a + b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>优点：</p>
+<ul>
+<li>便于查找函数内部使用的局部变量</li>
+<li>防止变量未定义时就被使用</li>
+<li>防止变量声明提升后引发的误解</li>
+</ul>
+<p>关于第三点，这里举个例子说明：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(x); <span class="comment">//第一处输出 ，注意结果</span></span><br><span class="line">  <span class="keyword">var</span> x = <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(x); <span class="comment">//第二处输出 2，没问题</span></span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<p>从代码上看，第二处输出肯定没问题，可能会有人认为第一处输出的是 1，因为此时在函数内部还没声明变量 x，根据作用域链，向外层查找的话，x 值为 1。但是实际输出的值应该是 undefined，因为 js 允许在函数任何地方声明变量，并且无论在哪里声明都等同于在顶部声明，这就是声明提升。所以上面的代码相当于:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> x;</span><br><span class="line">    <span class="built_in">console</span>.log(x);<span class="comment">//此时已声明 未赋值</span></span><br><span class="line">    x = <span class="number">2</span>;          <span class="comment">//赋值</span></span><br><span class="line">    <span class="built_in">console</span>.log(x);</span><br><span class="line">  &#125;)();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了避免可能出现的问题，不如把变量声明都放在代码块的头部。</p>
+<blockquote>
+<p>注意：所有变量声明都放在函数的头部;所有函数都在使用之前定义。</p>
+</blockquote>
+<h2 id="2-全局变量大写"><a href="#2-全局变量大写" class="headerlink" title="2.全局变量大写"></a>2.全局变量大写</h2><p>Javascript 最大的语法缺点，可能就是全局变量对于任何一个代码块，都是可读可写。这对代码的模块化和重复使用，非常不利。</p>
+<p>避免使用全局变量；如果不得不使用，用大写字母表示变量名，比如<strong>UPPER_CASE</strong>。</p>
+<h2 id="3-严格相等"><a href="#3-严格相等" class="headerlink" title="3.严格相等"></a>3.严格相等</h2><p>Javascript 有两个表示”相等”的运算符：”相等”（==）和”严格相等”（===），使用<code>==</code>有可能促使类型转换，建议主加<code>===</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> == <span class="string">"1"</span>; <span class="comment">// true</span></span><br><span class="line"><span class="number">1</span> == [<span class="number">1</span>]; <span class="comment">// true</span></span><br><span class="line"><span class="number">1</span> == <span class="literal">true</span>; <span class="comment">// true</span></span><br><span class="line"><span class="number">0</span> == <span class="string">""</span>; <span class="comment">// true</span></span><br><span class="line"><span class="number">0</span> == <span class="string">"0"</span>; <span class="comment">// true</span></span><br><span class="line"><span class="number">0</span> == <span class="literal">false</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>你有什么理由不用我？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">""</span> === <span class="string">""</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<h2 id="4-for-循环缓存-length"><a href="#4-for-循环缓存-length" class="headerlink" title="4.for 循环缓存 length"></a>4.for 循环缓存 length</h2><p>使用 for 循环时，缓存长度值通常用使用 for 循环遍历数组时，会采用以下写法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">  <span class="comment">// 具体操作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码存在的问题在于，在循环的每个迭代步骤，都必须访问一次 arr 的长度。如果 arr 是静态数值还好，但是我们在使用 js 时可能会碰到 arr 是 dom 元素对象，由于 dom 对象载页面下是活动的查询，这个长度查询就相当耗时，//用 len 缓存长度值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = arr.length; i &lt; len; i++) &#123;</span><br><span class="line">  <span class="comment">// 具体操作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>按照上面的代码，我们在第一次获取长度值时就缓存这个长度值，就可以避免上述问题。</p>
+<h2 id="5-模块化"><a href="#5-模块化" class="headerlink" title="5.模块化"></a>5.模块化</h2><p>拒绝全局 function 到底，引入模块模式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = <span class="number">20</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">s</span>) </span>&#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">go</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  test(s);</span><br><span class="line">  $.ajax(&#123;&#125;);</span><br><span class="line">&#125;</span><br><span class="line">$(<span class="string">"#test"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  go();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="base-module"><a href="#base-module" class="headerlink" title="base module"></a>base module</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> index = &#123;</span><br><span class="line">  init() &#123;&#125;,</span><br><span class="line">  datas() &#123;&#125;,</span><br><span class="line">  bind() &#123;</span><br><span class="line">    <span class="keyword">var</span> y = <span class="keyword">this</span>;</span><br><span class="line">    y.btn = $(<span class="string">"#test"</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">var</span> y = <span class="keyword">this</span>;</span><br><span class="line">    $.proxy(y.btn, <span class="string">"click"</span>, func, <span class="keyword">this</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  func() &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">index.init();</span><br><span class="line"><span class="built_in">module</span>.exports = index;</span><br></pre></td></tr></table></figure>
+<h2 id="6-优化-if…else-嵌套"><a href="#6-优化-if…else-嵌套" class="headerlink" title="6.优化 if…else 嵌套"></a>6.优化 if…else 嵌套</h2><h3 id="三元"><a href="#三元" class="headerlink" title="三元"></a>三元</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (foo) bar(); <span class="keyword">else</span> baz(); ==&gt; foo?bar():baz();</span><br><span class="line"><span class="keyword">if</span> (!foo) bar(); <span class="keyword">else</span> baz(); ==&gt; foo?baz():bar();</span><br><span class="line"><span class="keyword">if</span> (foo) <span class="keyword">return</span> bar(); <span class="keyword">else</span> <span class="keyword">return</span> baz(); ==&gt; <span class="keyword">return</span> foo?bar():baz();</span><br></pre></td></tr></table></figure>
+<h3 id="amp-amp-和"><a href="#amp-amp-和" class="headerlink" title="&amp;&amp; 和 ||"></a>&amp;&amp; 和 ||</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (foo) bar(); ==&gt; foo&amp;&amp;bar();</span><br><span class="line"><span class="keyword">if</span> (!foo) bar(); ==&gt; foo||bar();</span><br></pre></td></tr></table></figure>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<li><a href="http://www.ruanyifeng.com/blog/2012/04/javascript_programming_style.html" target="_blank" rel="noopener">Javascript 编程风格</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/38066626" target="_blank" rel="noopener">js 代码常见技巧总结</a></li>
+<li>[看看这些被同事喷的 JS 代码风格你写过多少](<a href="https://github.com/jackiewillen/blog/issues/14）" target="_blank" rel="noopener">https://github.com/jackiewillen/blog/issues/14）</a></li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Javascript/">Javascript</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://xiaoyueyue.org/2019/05/14/js编程风格/" data-title="js编程风格 | RainBow&#39;s Blog" data-tsina class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2019/05/14/pandoc文档转换命令行记录/" title="pandoc文档转换命令行记录">
+  <strong>上一篇：</strong><br>
+  <span>
+  pandoc文档转换命令行记录</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/05/14/React组件编码规范化/" title="React组件编码规范化">
+ <strong>下一篇：</strong><br> 
+ <span>React组件编码规范化
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-单一var"><span class="toc-number">1.</span> <span class="toc-text">1.单一var</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-全局变量大写"><span class="toc-number">2.</span> <span class="toc-text">2.全局变量大写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-严格相等"><span class="toc-number">3.</span> <span class="toc-text">3.严格相等</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-for-循环缓存-length"><span class="toc-number">4.</span> <span class="toc-text">4.for 循环缓存 length</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-模块化"><span class="toc-number">5.</span> <span class="toc-text">5.模块化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#base-module"><span class="toc-number">5.0.1.</span> <span class="toc-text">base module</span></a></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#6-优化-if…else-嵌套"><span class="toc-number">6.</span> <span class="toc-text">6.优化 if…else 嵌套</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#三元"><span class="toc-number">6.1.</span> <span class="toc-text">三元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#amp-amp-和"><span class="toc-number">6.2.</span> <span class="toc-text">&amp;&amp; 和 ||</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#参考"><span class="toc-number">6.2.1.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="xiaoyueyue165" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Javascript/" title="Javascript">Javascript<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/开发者笔记/" title="开发者笔记">开发者笔记<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Css/" title="Css">Css<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/拥抱开源/" title="拥抱开源">拥抱开源<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Interview/" title="Interview">Interview<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/React/" title="React">React<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/理解计算机/" title="理解计算机">理解计算机<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/观点与感想/" title="观点与感想">观点与感想<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">关注博客</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank" title="阮一峰的网络日志">阮一峰的网络日志</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.barretlee.com/entry/" target="_blank" title="小胡子哥的博客">小胡子哥的博客</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">关注唱吧</p>
+    <ul>
+        
+          <li class="changba_li">
+            
+            <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/874670453_200_200.jpg">
+            
+            
+            	<a class="changba_a" href="http://changba.com/u/104571671" target="_blank" title="琳琳abcdefg">琳琳abcdefg</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+              <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/463875924_200_200.jpg">
+            
+            
+            	<a class="changba_a" href="http://changba.com/u/193189028" target="_blank" title="Vesp3r">Vesp3r</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+               <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/880681979_200_200.jpg">
+             
+            
+            	<a class="changba_a" href="http://changba.com/u/21968651" target="_blank" title="大崇崇Zebra">大崇崇Zebra</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+                  <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/448860018_200_200.jpg">
+             
+            
+            	<a class="changba_a" href="http://changba.com/u/39302742" target="_blank" title="基督徒小越越">基督徒小越越</a>
+            
+          </image></li>
+        
+    </ul>
+</div>
+
+
+  
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m a Front-end developer. <br>
+			This is my blog,and my life is brilliant.</p>
+	</section>
+	 
+	<div class="social-font">
+		
+		
+		<a href="https://github.com/xiaoyueyue165" target="_blank" class="icon-github" title="github"></a>
+    
+    
+      <a href="http://changba.com/u/39302742" target="_blank" class="icon-changba" title="changba"></a>
+      
+		
+		
+		<a href="https://twitter.com/yanyueyou" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:xiaoyueyue165@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019
+		
+		<a href="/about" target="_blank" title="Xiaoyueyue">Xiaoyueyue</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

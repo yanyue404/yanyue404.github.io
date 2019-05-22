@@ -1,0 +1,636 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>2019,帮助你更好的开发小程序 | RainBow&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Xiaoyueyue">
+    
+
+    
+    <meta name="description" content="前言原生开发小程序有了两个项目，在原生开发小程序经验技巧方面有一些自己的总结，此篇文章做原创分享！ 本文适合老手查看，新手请参阅官方文档，同步至github。 1.发布订阅处理复杂逻辑 支持先订阅后发布，以及先发布后订阅   方法源码  123456789101112131415161718192021222324252627282930313233343536373839404142434445">
+<meta name="keywords" content="开发者笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2019,帮助你更好的开发小程序">
+<meta property="og:url" content="https://xiaoyueyue.org/2019/04/28/2019,帮助你更好的开发小程序/index.html">
+<meta property="og:site_name" content="RainBow&#39;s Blog">
+<meta property="og:description" content="前言原生开发小程序有了两个项目，在原生开发小程序经验技巧方面有一些自己的总结，此篇文章做原创分享！ 本文适合老手查看，新手请参阅官方文档，同步至github。 1.发布订阅处理复杂逻辑 支持先订阅后发布，以及先发布后订阅   方法源码  123456789101112131415161718192021222324252627282930313233343536373839404142434445">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-21T02:06:56.996Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2019,帮助你更好的开发小程序">
+<meta name="twitter:description" content="前言原生开发小程序有了两个项目，在原生开发小程序经验技巧方面有一些自己的总结，此篇文章做原创分享！ 本文适合老手查看，新手请参阅官方文档，同步至github。 1.发布订阅处理复杂逻辑 支持先订阅后发布，以及先发布后订阅   方法源码  123456789101112131415161718192021222324252627282930313233343536373839404142434445">
+<meta name="twitter:creator" content="@yanyueyou">
+
+    
+    <link rel="alternative" href="/atom.xml" title="RainBow&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.jpg" alt="RainBow&#39;s Blog" title="RainBow&#39;s Blog"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="RainBow&#39;s Blog">RainBow&#39;s Blog</a></h1>
+				<h2 class="blog-motto">余则缊袍敝衣处其间，略无慕艳意。以中有足乐者，不知口体之奉不若人也！</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/todolist">TodoList</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
+						<input type="hidden" name="q" value="site:xiaoyueyue.org">
+					</form>
+					
+					</li>
+				</ul>
+			</ul></nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/04/28/2019,帮助你更好的开发小程序/" title="2019,帮助你更好的开发小程序" itemprop="url">2019,帮助你更好的开发小程序</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Xiaoyueyue" target="_blank" itemprop="author">Xiaoyueyue</a>
+		
+  </p><p class="article-time">
+    <time datetime="2019-04-28T01:46:01.515Z" itemprop="datePublished"> 发表于 2019-04-28 09:46:01</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-发布订阅处理复杂逻辑"><span class="toc-number">2.</span> <span class="toc-text">1.发布订阅处理复杂逻辑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Storage"><span class="toc-number">3.</span> <span class="toc-text">2.Storage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-filter-计算属性"><span class="toc-number">4.</span> <span class="toc-text">3.filter 计算属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-flex-Style"><span class="toc-number">5.</span> <span class="toc-text">4.flex Style</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-async-await"><span class="toc-number">6.</span> <span class="toc-text">5.async await</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-addKey-Api"><span class="toc-number">7.</span> <span class="toc-text">6.addKey Api</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-组件化复用开发实践"><span class="toc-number">8.</span> <span class="toc-text">7. 组件化复用开发实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-第一步，查看目录结构划分，主要为-Carousel-组件-在-index-页面的使用"><span class="toc-number">8.1.</span> <span class="toc-text">(1) 第一步，查看目录结构划分，主要为 Carousel 组件 在 index 页面的使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-第二步我们分析看如何使用-设计-组件需要的-props"><span class="toc-number">8.2.</span> <span class="toc-text">(2) 第二步我们分析看如何使用,设计 组件需要的 props</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-业务代码编写"><span class="toc-number">8.3.</span> <span class="toc-text">(3).业务代码编写</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-自定义-headerBar"><span class="toc-number">9.</span> <span class="toc-text">8. 自定义 headerBar</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考"><span class="toc-number">9.1.</span> <span class="toc-text">参考</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生态圈"><span class="toc-number">9.2.</span> <span class="toc-text">生态圈</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>原生</code>开发小程序有了两个项目，在原生开发小程序经验技巧方面有一些自己的总结，此篇文章做原创分享！</p>
+<p>本文适合老手查看，新手请参阅<a href="https://developers.weixin.qq.com/miniprogram/dev/index.html?t=18122618" target="_blank" rel="noopener">官方文档</a>，同步至<a href="https://github.com/xiaoyueyue165/blog/issues/47" target="_blank" rel="noopener">github</a>。</p>
+<h2 id="1-发布订阅处理复杂逻辑"><a href="#1-发布订阅处理复杂逻辑" class="headerlink" title="1.发布订阅处理复杂逻辑"></a>1.发布订阅处理复杂逻辑</h2><blockquote>
+<p>支持先订阅后发布，以及先发布后订阅</p>
+</blockquote>
+<ul>
+<li>方法源码</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Event = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> clientList = &#123;&#125;,</span><br><span class="line">    pub,</span><br><span class="line">    sub,</span><br><span class="line">    remove;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> cached = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  sub = <span class="function"><span class="keyword">function</span>(<span class="params">key, fn</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!clientList[key]) &#123;</span><br><span class="line">      clientList[key] = [];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 使用缓存执行的订阅不用多次调用执行</span></span><br><span class="line">    cached[key + <span class="string">"time"</span>] == <span class="literal">undefined</span> ? clientList[key].push(fn) : <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">if</span> (cached[key] <span class="keyword">instanceof</span> <span class="built_in">Array</span> &amp;&amp; cached[key].length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="comment">//说明有缓存的 可以执行</span></span><br><span class="line">      fn.apply(<span class="literal">null</span>, cached[key]);</span><br><span class="line">      cached[key + <span class="string">"time"</span>] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  pub = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> key = <span class="built_in">Array</span>.prototype.shift.call(<span class="built_in">arguments</span>),</span><br><span class="line">      fns = clientList[key];</span><br><span class="line">    <span class="keyword">if</span> (!fns || fns.length === <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="comment">//初始默认缓存</span></span><br><span class="line">      cached[key] = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>, <span class="number">0</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, fn; (fn = fns[i++]); ) &#123;</span><br><span class="line">      <span class="comment">// 再次发布更新缓存中的 data 参数</span></span><br><span class="line">      cached[key + <span class="string">"time"</span>] != <span class="literal">undefined</span></span><br><span class="line">        ? (cached[key] = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>, <span class="number">0</span>))</span><br><span class="line">        : <span class="string">""</span>;</span><br><span class="line">      fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  remove = <span class="function"><span class="keyword">function</span>(<span class="params">key, fn</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> fns = clientList[key];</span><br><span class="line">    <span class="comment">// 缓存订阅一并删除</span></span><br><span class="line">    <span class="keyword">var</span> cachedFn = cached[key];</span><br><span class="line">    <span class="keyword">if</span> (!fns &amp;&amp; !cachedFn) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!fn) &#123;</span><br><span class="line">      fns &amp;&amp; (fns.length = <span class="number">0</span>);</span><br><span class="line">      cachedFn &amp;&amp; (cachedFn.length = <span class="number">0</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (cachedFn) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> m = cachedFn.length - <span class="number">1</span>; m &gt;= <span class="number">0</span>; m--) &#123;</span><br><span class="line">          <span class="keyword">var</span> _fn_temp = cachedFn[m];</span><br><span class="line">          <span class="keyword">if</span> (_fn_temp === fn) &#123;</span><br><span class="line">            cachedFn.splice(m, <span class="number">1</span>);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> n = fns.length - <span class="number">1</span>; n &gt;= <span class="number">0</span>; n--) &#123;</span><br><span class="line">        <span class="keyword">var</span> _fn = fns[n];</span><br><span class="line">        <span class="keyword">if</span> (_fn === fn) &#123;</span><br><span class="line">          fns.splice(n, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    pub: pub,</span><br><span class="line">    sub: sub,</span><br><span class="line">    remove: remove</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>全局挂载使用</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line">App(&#123;</span><br><span class="line">  onLaunch: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 注册 storage，这是第二条</span></span><br><span class="line">    wx.Storage = Storage;</span><br><span class="line">    <span class="comment">// 注册发布订阅模式</span></span><br><span class="line">    wx.yue = Event;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用实例</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加收货地址页面订阅</span></span><br><span class="line"> onLoad: <span class="function"><span class="keyword">function</span> (<span class="params">options</span>) </span>&#123;</span><br><span class="line">        wx.yue.sub(<span class="string">"addAddress"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">            y.setData(&#123;</span><br><span class="line">                addAddress: data</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line"> &#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 生命周期函数--监听页面隐藏</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> onHide: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 取消多余的事件订阅</span></span><br><span class="line">    wx.Storage.removeItem(<span class="string">"addAddress"</span>);</span><br><span class="line">&#125;,</span><br><span class="line"> onUnload: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 取消多余的事件订阅</span></span><br><span class="line">    wx.yue.remove(<span class="string">"addAddress"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 传递地址页面获取好数据传递</span></span><br><span class="line">wx.yue.pub(<span class="string">"addAddress"</span>, data.info);</span><br><span class="line"><span class="comment">// 补充跳转返回</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意:使用完成数据后要注意卸载，在页面被关闭时操作</p>
+</blockquote>
+<h2 id="2-Storage"><a href="#2-Storage" class="headerlink" title="2.Storage"></a>2.Storage</h2><blockquote>
+<p>storage 管理封装，用法和上面的一致，挂载在全局对象上调用，使用介绍就不列了</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Storage = &#123;</span><br><span class="line">  setItem: <span class="function"><span class="keyword">function</span>(<span class="params">key, obj, callback</span>) </span>&#123;</span><br><span class="line">    wx.setStorage(&#123;</span><br><span class="line">      key: key,</span><br><span class="line">      data: obj,</span><br><span class="line">      success: callback || <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  getItem: <span class="function"><span class="keyword">function</span>(<span class="params">key</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> wx.getStorageSync(key);</span><br><span class="line">  &#125;,</span><br><span class="line">  removeItem: <span class="function"><span class="keyword">function</span>(<span class="params">key</span>) </span>&#123;</span><br><span class="line">    wx.removeStorage(&#123;</span><br><span class="line">      key: key</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="3-filter-计算属性"><a href="#3-filter-计算属性" class="headerlink" title="3.filter 计算属性"></a>3.filter 计算属性</h2><blockquote>
+<p>小程序也有计算属性，你知道吗？</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 文件名称为 ：filter.wxs</span></span><br><span class="line"><span class="comment">// 不支持es6，Date,Number</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">filterOrderTitleName</span>(<span class="params">status</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (status) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"1"</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="string">"待支付"</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"2"</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="string">"待配送"</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"3"</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="string">"配送中"</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">"4"</span>:</span><br><span class="line">      <span class="keyword">return</span> <span class="string">"已完成"</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">filterPrice</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 四舍五入 格式化数字</span></span><br><span class="line">  <span class="comment">// toFix(8440.55,1) =&gt; 8440.6</span></span><br><span class="line">  <span class="keyword">var</span> times = <span class="built_in">Math</span>.pow(<span class="number">10</span>, <span class="number">2</span>);</span><br><span class="line">  <span class="keyword">var</span> roundNum = <span class="built_in">Math</span>.round(str * times) / times;</span><br><span class="line">  <span class="keyword">return</span> roundNum.toFixed(<span class="number">2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  filterOrderTitleName: filterOrderTitleName,</span><br><span class="line">  filterPrice: filterPrice</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用实例，过滤处理打折后的金额小数位数</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 当前文件名：shoppingCart.wxml</span></span><br><span class="line"><span class="comment">// wxs 文件顶部导入</span></span><br><span class="line">&lt;wxs src=<span class="string">"../../filter/filter.wxs"</span> <span class="built_in">module</span>=<span class="string">"filter"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">wxs</span>&gt;</span></span></span><br><span class="line"> &lt;view <span class="class"><span class="keyword">class</span></span>=<span class="string">'offerPrice nowrap'</span>&gt;¥&#123;&#123;filter.filterPrice(item.plus*<span class="number">100</span>*item.price/<span class="number">1000</span>)&#125;&#125;</span><br><span class="line">    &lt;image <span class="class"><span class="keyword">class</span></span>=<span class="string">'youhuiBox'</span> src=<span class="string">"../../assets/youhuiBox.png"</span>&gt;</span><br><span class="line">        &lt;view <span class="class"><span class="keyword">class</span></span>=<span class="string">'youhuiText'</span>&gt;会员&#123;&#123;item.dazhe&#125;&#125;折&lt;<span class="regexp">/view&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/im</span>age&gt;</span><br><span class="line"> &lt;<span class="regexp">/view&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="4-flex-Style"><a href="#4-flex-Style" class="headerlink" title="4.flex Style"></a>4.flex Style</h2><blockquote>
+<p>分享我常使用的自定义的一套 flex 样式,快速实现布局</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* -------------------------------------------------------------flex------------------------------------------------------- */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.center</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">  <span class="attribute">justify-content</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 单行水平垂直 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.oneLineCenter</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">display</span>: -webkit-flex;</span><br><span class="line">  <span class="attribute">justify-content</span>: center;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 单行垂直居中，水平向左 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.oneLineStart</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">display</span>: -webkit-flex;</span><br><span class="line">  <span class="attribute">justify-content</span>: flex-start;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 单行垂直居中，水平向右 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.oneLineEnd</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">display</span>: -webkit-flex;</span><br><span class="line">  <span class="attribute">justify-content</span>: flex-end;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 单行垂直居中，水平保持间距 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.oneLineAround</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">display</span>: -webkit-flex;</span><br><span class="line">  <span class="attribute">justify-content</span>: space-around;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 单行垂直居中，两端对齐 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.oneLineBetween</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">display</span>: -webkit-flex;</span><br><span class="line">  <span class="attribute">justify-content</span>: space-between;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 超过单行设置的最大宽度，允许换行显示 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.f-wrap</span> &#123;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 多轴线方向，一般配合  wrap 使用 */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 宽度不足换行后，垂直方向靠上排列 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.mulitLineStart</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">display</span>: -webkit-flex;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">  <span class="attribute">align-content</span>: flex-start;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 宽度不足换行后，垂直方向居中排列 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.mulitLineCenter</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">display</span>: -webkit-flex;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">  <span class="attribute">align-content</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 宽度不足换行后，垂直方向靠下排列 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.mulitLineEnd</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">display</span>: -webkit-flex;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">  <span class="attribute">align-content</span>: flex-end;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 宽度不足换行后，垂直方向上保持间隔排列 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.mulitLineAround</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">display</span>: -webkit-flex;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">  <span class="attribute">align-content</span>: space-around;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 宽度不足换行后，垂直方向上靠两侧最顶开始间隔排列 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.mulitLineBetween</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">display</span>: -webkit-flex;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">  <span class="attribute">align-content</span>: space-between;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 纵轴变主轴，垂直靠上，水平居中 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.columnStart</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">display</span>: -webkit-flex;</span><br><span class="line">  <span class="attribute">flex-direction</span>: column;</span><br><span class="line">  <span class="attribute">justify-content</span>: flex-start;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 纵轴变主轴，垂直靠下，水平居中 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.columnEnd</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-direction</span>: column;</span><br><span class="line">  <span class="attribute">justify-content</span>: flex-end;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 纵轴变主轴，垂直居中，水平居中 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.columnCenter</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-direction</span>: column;</span><br><span class="line">  <span class="attribute">justify-content</span>: center;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 纵轴变主轴，垂直间隔排列，水平居中 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.columnAround</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-direction</span>: column;</span><br><span class="line">  <span class="attribute">justify-content</span>: space-around;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 纵轴变主轴，垂直上下两侧按间隔排列，水平居中 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.columnBetween</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-direction</span>: column;</span><br><span class="line">  <span class="attribute">justify-content</span>: space-between;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 纵轴变主轴，垂直上下两侧按间隔排列，水平靠左 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.columnBetweenStart</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-direction</span>: column;</span><br><span class="line">  <span class="attribute">justify-content</span>: space-between;</span><br><span class="line">  <span class="attribute">align-items</span>: flex-start;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 纵轴变主轴，垂直上下两侧按间隔排列，水平靠右 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.columnBetweenEnd</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-direction</span>: column;</span><br><span class="line">  <span class="attribute">justify-content</span>: space-between;</span><br><span class="line">  <span class="attribute">align-items</span>: flex-end;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="5-async-await"><a href="#5-async-await" class="headerlink" title="5.async await"></a>5.async await</h2><p>使用<a href="https://github.com/facebook/regenerator/blob/master/packages/regenerator-runtime/runtime.js" target="_blank" rel="noopener">runtime.js</a>，使小程序支持 async await，拷贝文件至项目目录下。</p>
+<ul>
+<li>实例用法</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> regeneratorRuntime = <span class="built_in">require</span>(<span class="string">"../../utils/runtime.js"</span>);</span><br><span class="line">Page(&#123;</span><br><span class="line">  shopCartInit() &#123;</span><br><span class="line">    <span class="keyword">var</span> y = <span class="keyword">this</span>;</span><br><span class="line">    <span class="comment">// 拿到商铺位置信息再去渲染购物计算当前的address符合不符合规定</span></span><br><span class="line">    <span class="keyword">var</span> showCartList = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="comment">// 显示全局的地址信息</span></span><br><span class="line">      <span class="keyword">var</span> globalAddress = wx.Storage.getItem(<span class="string">"globalAddress"</span>);</span><br><span class="line">      <span class="keyword">if</span> (globalAddress) &#123;</span><br><span class="line">        y.setData(&#123;</span><br><span class="line">          globalAddress: globalAddress,</span><br><span class="line">          addr_id: globalAddress.id</span><br><span class="line">        &#125;);</span><br><span class="line">        y.calculateDistance(</span><br><span class="line">          qqmapsdk,</span><br><span class="line">          globalAddress.latitude,</span><br><span class="line">          globalAddress.longitude</span><br><span class="line">        );</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        y.setData(&#123;</span><br><span class="line">          globalAddress: &#123;&#125;</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// await 等待获取商铺位置信息</span></span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">getShopPosTionMsg</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">await</span> util.promiseRequest(api.merchant_addr, &#123;&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> data = res.data.response_data.lists[<span class="number">0</span>];</span><br><span class="line">        y.setData(&#123;</span><br><span class="line">          shop_lat: data.latitude, <span class="comment">// 商铺纬度</span></span><br><span class="line">          shop_lng: data.longitude, <span class="comment">// 商铺经度</span></span><br><span class="line">          peiSongFanWei: data.scope <span class="comment">// 配送范围</span></span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">initData</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">await</span> getShopPosTionMsg();</span><br><span class="line">      <span class="keyword">await</span> showCartList();</span><br><span class="line">      util.closeLoading();</span><br><span class="line">      y.setData(&#123;</span><br><span class="line">        loading: <span class="literal">false</span></span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 开始执行</span></span><br><span class="line">    initData();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="6-addKey-Api"><a href="#6-addKey-Api" class="headerlink" title="6.addKey Api"></a>6.addKey Api</h2><blockquote>
+<p>使用自定义属性的方法辅助完成业务逻辑</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 为数组添加新的自定义键值以及过滤每个子项的方法</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param &#123;*&#125; arr</span></span><br><span class="line"><span class="comment"> * @param &#123;*&#125; obj &#123; isShow:false,isStar:false&#125;</span></span><br><span class="line"><span class="comment"> * @param &#123;*&#125; filterFn</span></span><br><span class="line"><span class="comment"> * @returns</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addKey</span>(<span class="params">arr, obj, filterFn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(arr)) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"第一个参数必须为数组类型"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> temp = arr.forEach(<span class="function">(<span class="params">v, index, arr</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">typeof</span> filterFn === <span class="string">"function"</span> ? filterFn(v, index) : <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">      v[key] = obj[key];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用实例</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">util.addKey(data, &#123; <span class="attr">y_isCheck</span>: <span class="literal">false</span> &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">v</span>) </span>&#123;</span><br><span class="line">  v.dazhe = <span class="built_in">Number</span>(v.plus);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">this</span>.setData(&#123;</span><br><span class="line">  cartList: data</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="7-组件化复用开发实践"><a href="#7-组件化复用开发实践" class="headerlink" title="7. 组件化复用开发实践"></a>7. 组件化复用开发实践</h2><blockquote>
+<p>组件化解构项目元件，提高开发效率,可参照<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/" target="_blank" rel="noopener">官方介绍</a>起步 !</p>
+</blockquote>
+<p>这里介绍一个自定义的跑马灯的轮播图组件实例</p>
+<h3 id="1-第一步，查看目录结构划分，主要为-Carousel-组件-在-index-页面的使用"><a href="#1-第一步，查看目录结构划分，主要为-Carousel-组件-在-index-页面的使用" class="headerlink" title="(1) 第一步，查看目录结构划分，主要为 Carousel 组件 在 index 页面的使用"></a>(1) 第一步，查看目录结构划分，主要为 <code>Carousel</code> 组件 在 <code>index</code> 页面的使用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">│</span><br><span class="line">├───component</span><br><span class="line">│   └───Carousel</span><br><span class="line">│           Carousel.js</span><br><span class="line">│           Carousel.json</span><br><span class="line">│           Carousel.wxml</span><br><span class="line">│           Carousel.wxss</span><br><span class="line">│</span><br><span class="line">├───filter</span><br><span class="line">│       filter.wxs</span><br><span class="line">│</span><br><span class="line">├───pages</span><br><span class="line">│   └───index</span><br><span class="line">│           index.js</span><br><span class="line">│           index.json</span><br><span class="line">│           index.wxml</span><br><span class="line">│           index.wxss</span><br><span class="line">│</span><br><span class="line">└───utils</span><br><span class="line">        api.js</span><br><span class="line">        runtime.js</span><br><span class="line">        util.js</span><br></pre></td></tr></table></figure>
+<h3 id="2-第二步我们分析看如何使用-设计-组件需要的-props"><a href="#2-第二步我们分析看如何使用-设计-组件需要的-props" class="headerlink" title="(2) 第二步我们分析看如何使用,设计 组件需要的 props"></a>(2) 第二步我们分析看如何使用,设计 组件需要的 <code>props</code></h3><ul>
+<li>数据项，必须 <code>bannerList</code></li>
+<li>轮播图的固定高度 <code>swiperHeight</code></li>
+<li>自定义轮播按钮小点，宽与高一致，圆形 <code>dotWidthAndHeight</code></li>
+<li>轮播按钮盒子距离顶部的高度 <code>dotTop</code></li>
+</ul>
+<p><strong> 最终在 index.wxml 的实际使用</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">"Carousel"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Carousel</span></span></span><br><span class="line"><span class="tag">    <span class="attr">swiperHeight</span>=<span class="string">"260rpx"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">bannerList</span>=<span class="string">"&#123;&#123;bannerList&#125;&#125;"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">dotWidthAndHeight</span>=<span class="string">"12rpx"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">dotTop</span>=<span class="string">"-20rpx"</span></span></span><br><span class="line"><span class="tag">  &gt;</span><span class="tag">&lt;/<span class="name">Carousel</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-业务代码编写"><a href="#3-业务代码编写" class="headerlink" title="(3).业务代码编写"></a>(3).业务代码编写</h3><ul>
+<li>Carousel.json<br>开启自定义组件模式</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"component"</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Carousel.wxml</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">"Carousel_wrap"</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 图片区 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">swiper</span></span></span><br><span class="line"><span class="tag">    <span class="attr">current</span>=<span class="string">"&#123;&#123;swiperCurrentIndex&#125;&#125;"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">circular</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">bindchange</span>=<span class="string">"swiperChange"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">indicator-dots</span>=<span class="string">"&#123;&#123;indicatorDots&#125;&#125;"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">autoplay</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">interval</span>=<span class="string">"5000"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">duration</span>=<span class="string">"1000"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">style</span>=<span class="string">"height:&#123;&#123;swiperHeight&#125;&#125;"</span></span></span><br><span class="line"><span class="tag">  &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">swiper-item</span></span></span><br><span class="line"><span class="tag">      <span class="attr">wx:for</span>=<span class="string">"&#123;&#123;bannerList&#125;&#125;"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">bindtap</span>=<span class="string">"toHref"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">wx:key</span>=<span class="string">"&#123;&#123;index&#125;&#125;"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">bindtap</span>=<span class="string">"toHref"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">data-type</span>=<span class="string">"&#123;&#123;item.type&#125;&#125;"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">data-id</span>=<span class="string">"&#123;&#123;item.goods_id&#125;&#125;"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">data-content</span>=<span class="string">"&#123;&#123;item.content&#125;&#125;"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">data-link</span>=<span class="string">"&#123;&#123;item.link&#125;&#125;"</span></span></span><br><span class="line"><span class="tag">    &gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">image</span> <span class="attr">src</span>=<span class="string">"&#123;&#123;item.img_url&#125;&#125;"</span> <span class="attr">class</span>=<span class="string">"slide-image"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">swiper-item</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">swiper</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 关联按钮 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">"boxCell"</span> <span class="attr">style</span>=<span class="string">"top:&#123;&#123;dotTop&#125;&#125;"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">block</span></span></span><br><span class="line"><span class="tag">      <span class="attr">wx:for</span>=<span class="string">"&#123;&#123;bannerList.length &gt; 1 ? bannerList:[]&#125;&#125;"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">wx:for-index</span>=<span class="string">"index"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">wx:key</span>=<span class="string">"&#123;&#123;item.banner&#125;&#125;"</span></span></span><br><span class="line"><span class="tag">    &gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">view</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">"&#123;&#123;index&#125;&#125;"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">class</span>=<span class="string">"dot &#123;&#123;index === swiperCurrentIndex ? 'dot_active':''&#125;&#125;"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">style</span>=<span class="string">"width:&#123;&#123;dotWidthAndHeight&#125;&#125;,height:&#123;&#123;dotWidthAndHeight&#125;&#125;"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">bindtap</span>=<span class="string">"selectCarouselByIndex"</span></span></span><br><span class="line"><span class="tag">      /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">block</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Carousel.js</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">Component(&#123;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 组件的属性列表 必须</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  properties: &#123;</span><br><span class="line">    bannerList: &#123;</span><br><span class="line">      <span class="comment">// 属性名</span></span><br><span class="line">      type: <span class="built_in">Array</span>, <span class="comment">// 类型（必填），目前接受的类型包括：String, Number, Boolean, Object, Array, null（表示任意类型）</span></span><br><span class="line">      value: [], <span class="comment">// 属性初始值（可选），如果未指定则会根据类型选择一个</span></span><br><span class="line">      observer: <span class="function"><span class="keyword">function</span>(<span class="params">newVal, oldVal</span>) </span>&#123;&#125; <span class="comment">// 属性被改变时执行的函数（可选），也可以写成在methods段中定义的方法名字符串, 如：'_propertyChange'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    dotWidthAndHeight: <span class="built_in">String</span>,</span><br><span class="line">    swiperHeight: <span class="built_in">String</span>, <span class="comment">// swiper 高度</span></span><br><span class="line">    dotTop: <span class="built_in">String</span> <span class="comment">// 小点距离顶部高度</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 组件的初始数据</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  data: &#123;</span><br><span class="line">    swiperCurrentIndex: <span class="number">0</span>,</span><br><span class="line">    indicatorDots: <span class="literal">false</span> <span class="comment">// 自定义轮播按钮</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 组件的方法列表</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  methods: &#123;</span><br><span class="line">    swiperChange: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> source = e.detail.source;</span><br><span class="line">      <span class="keyword">if</span> (source === <span class="string">"autoplay"</span> || source === <span class="string">"touch"</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">          swiperCurrentIndex: e.detail.current</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    selectCarouselByIndex: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">        swiperCurrentIndex: <span class="built_in">Number</span>(e.currentTarget.id)</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 轮播图跳转至内部页面</span></span><br><span class="line">    toHref(e) &#123;</span><br><span class="line">      <span class="keyword">const</span> data = e.currentTarget.dataset;</span><br><span class="line">      <span class="comment">// type = 2，根据 goods_id 展示商品详情</span></span><br><span class="line">      <span class="comment">// type = 3, 展示富文本的活动详情页面</span></span><br><span class="line">      <span class="keyword">if</span> (data.type === <span class="string">"2"</span>) &#123;</span><br><span class="line">        wx.navigateTo(&#123;</span><br><span class="line">          url: <span class="string">`../sort_detail/sort_detail?id=<span class="subst">$&#123;data.id&#125;</span>`</span></span><br><span class="line">        &#125;);</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (data.type === <span class="string">"3"</span>) &#123;</span><br><span class="line">        wx.yue.pub(<span class="string">"renderData"</span>, data.content);</span><br><span class="line">        wx.navigateTo(&#123;</span><br><span class="line">          url: <span class="string">`../activity_detail/activity_detail`</span></span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="8-自定义-headerBar"><a href="#8-自定义-headerBar" class="headerlink" title="8. 自定义 headerBar"></a>8. 自定义 headerBar</h2><blockquote>
+<p>后续分享…</p>
+</blockquote>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://juejin.im/post/5c14b253e51d452f8e603896" target="_blank" rel="noopener">https://juejin.im/post/5c14b253e51d452f8e603896</a></li>
+</ul>
+<h3 id="生态圈"><a href="#生态圈" class="headerlink" title="生态圈"></a>生态圈</h3><ul>
+<li><a href="https://github.com/weilanwl/ColorUI" target="_blank" rel="noopener">ColorUI</a> 鲜亮的高饱和色彩，专注视觉的小程序组件库</li>
+<li><a href="https://github.com/NervJS/taro" target="_blank" rel="noopener">taro</a> 多端统一开发框架，支持用 React 的开发方式编写一次代码，生成能运行在微信小程序、H5 、 React Native 等的应用</li>
+<li><a href="https://github.com/dcloudio/uni-app" target="_blank" rel="noopener">uni-app</a> 使用 Vue.js 开发跨平台应用的前端框架</li>
+<li><a href="https://github.com/justjavac/awesome-wechat-weapp" target="_blank" rel="noopener">微信小程序开发资源汇总</a></li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/开发者笔记/">开发者笔记</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://xiaoyueyue.org/2019/04/28/2019,帮助你更好的开发小程序/" data-title="2019,帮助你更好的开发小程序 | RainBow&#39;s Blog" data-tsina class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev">
+ <a href="/2019/04/28/git+Github的正确姿势/" title="git+Github的正确姿势">
+  <strong>上一篇：</strong><br>
+  <span>
+  git+Github的正确姿势</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/04/28/git入门与实践/" title="git 入门与实践">
+ <strong>下一篇：</strong><br> 
+ <span>git 入门与实践
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-发布订阅处理复杂逻辑"><span class="toc-number">2.</span> <span class="toc-text">1.发布订阅处理复杂逻辑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Storage"><span class="toc-number">3.</span> <span class="toc-text">2.Storage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-filter-计算属性"><span class="toc-number">4.</span> <span class="toc-text">3.filter 计算属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-flex-Style"><span class="toc-number">5.</span> <span class="toc-text">4.flex Style</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-async-await"><span class="toc-number">6.</span> <span class="toc-text">5.async await</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-addKey-Api"><span class="toc-number">7.</span> <span class="toc-text">6.addKey Api</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-组件化复用开发实践"><span class="toc-number">8.</span> <span class="toc-text">7. 组件化复用开发实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-第一步，查看目录结构划分，主要为-Carousel-组件-在-index-页面的使用"><span class="toc-number">8.1.</span> <span class="toc-text">(1) 第一步，查看目录结构划分，主要为 Carousel 组件 在 index 页面的使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-第二步我们分析看如何使用-设计-组件需要的-props"><span class="toc-number">8.2.</span> <span class="toc-text">(2) 第二步我们分析看如何使用,设计 组件需要的 props</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-业务代码编写"><span class="toc-number">8.3.</span> <span class="toc-text">(3).业务代码编写</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-自定义-headerBar"><span class="toc-number">9.</span> <span class="toc-text">8. 自定义 headerBar</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考"><span class="toc-number">9.1.</span> <span class="toc-text">参考</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生态圈"><span class="toc-number">9.2.</span> <span class="toc-text">生态圈</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="xiaoyueyue165" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Javascript/" title="Javascript">Javascript<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/开发者笔记/" title="开发者笔记">开发者笔记<sup>13</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Css/" title="Css">Css<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/拥抱开源/" title="拥抱开源">拥抱开源<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Interview/" title="Interview">Interview<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/React/" title="React">React<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/理解计算机/" title="理解计算机">理解计算机<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/观点与感想/" title="观点与感想">观点与感想<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">关注博客</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank" title="阮一峰的网络日志">阮一峰的网络日志</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.barretlee.com/entry/" target="_blank" title="小胡子哥的博客">小胡子哥的博客</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">关注唱吧</p>
+    <ul>
+        
+          <li class="changba_li">
+            
+            <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/874670453_200_200.jpg">
+            
+            
+            	<a class="changba_a" href="http://changba.com/u/104571671" target="_blank" title="琳琳abcdefg">琳琳abcdefg</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+              <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/463875924_200_200.jpg">
+            
+            
+            	<a class="changba_a" href="http://changba.com/u/193189028" target="_blank" title="Vesp3r">Vesp3r</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+               <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/880681979_200_200.jpg">
+             
+            
+            	<a class="changba_a" href="http://changba.com/u/21968651" target="_blank" title="大崇崇Zebra">大崇崇Zebra</a>
+            
+          </image></li>
+        
+          <li class="changba_li">
+            
+                  <image class="changba_Avator" src="http://aliimg.changba.com/cache/photo/448860018_200_200.jpg">
+             
+            
+            	<a class="changba_a" href="http://changba.com/u/39302742" target="_blank" title="基督徒小越越">基督徒小越越</a>
+            
+          </image></li>
+        
+    </ul>
+</div>
+
+
+  
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m a Front-end developer. <br>
+			This is my blog,and my life is brilliant.</p>
+	</section>
+	 
+	<div class="social-font">
+		
+		
+		<a href="https://github.com/xiaoyueyue165" target="_blank" class="icon-github" title="github"></a>
+    
+    
+      <a href="http://changba.com/u/39302742" target="_blank" class="icon-changba" title="changba"></a>
+      
+		
+		
+		<a href="https://twitter.com/yanyueyou" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:xiaoyueyue165@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019
+		
+		<a href="/about" target="_blank" title="Xiaoyueyue">Xiaoyueyue</a>
+		
+
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
