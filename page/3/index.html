@@ -79,15 +79,46 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2019/05/14/开发环境的搭建/" title="开发环境的搭建" itemprop="url">
+    <a href="/2019/05/14/redux入门/" title="redux入门" itemprop="url">
   
-    <h1 itemprop="name">开发环境的搭建</h1>
+    <h1 itemprop="name">redux入门</h1>
     
      
-           <p itemprop="description">全局安装12345678910111213141516171819202122232425262728293031# reactnpm install create-react-app -g# vuenpm install -g @vue/cliyarn global add @</p>
+           <p itemprop="description">介绍Redux 是 JavaScript 状态容器，提供可预测化的状态管理。
+使用场景
+用户的使用方式复杂
+不同身份的用户有不同的使用方式（比如普通用户和管理员）
+多个用户之间可以协作
+与服务器大量交互，或者使用了 WebSocket
+View 要从多个来源获取数据
+
+栗子
+地址</p>
         
     
     <time datetime="2019-05-14T05:49:06.739Z" itemprop="datePublished">2019-05-14 13:49:06</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2019/05/14/Javascript中的this指向/" title="Javascript中的this指向" itemprop="url">
+  
+    <h1 itemprop="name">Javascript中的this指向</h1>
+    
+     
+           <p itemprop="description">1. 在全局环境中使用时候在全局中使用，this 就代表全局对象 Global（在浏览器中为 window，但是在严格模式下’use strict’，this 的值为 undefined）
+1document.write(this); //[object Window]
+当您在全</p>
+        
+    
+    <time datetime="2019-05-14T05:49:06.732Z" itemprop="datePublished">2019-05-14 13:49:06</time>
   </a>
 </section>
 
@@ -110,28 +141,6 @@ pandoc’s download page
 最佳方案 - typora
 
 命令markdown 转换为 html1234// 只有关键标签pandoc -f markdown -t html -o abc1.html abc.md// 完整文档pa</p>
-        
-    
-    <time datetime="2019-05-14T05:49:06.732Z" itemprop="datePublished">2019-05-14 13:49:06</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2019/05/14/js编程风格/" title="js编程风格" itemprop="url">
-  
-    <h1 itemprop="name">js编程风格</h1>
-    
-     
-           <p itemprop="description">框架能够让我们跑的更快，但只有了解原生的 JS 才能让我们走的更远。
-1.单一var这条规则的意思是，把函数内部的所有变量，放到顶部声明。比如：
-123456//示例function A() &amp;#123;  var a = 1,    b = 2,    c = a + b;&amp;#</p>
         
     
     <time datetime="2019-05-14T05:49:06.732Z" itemprop="datePublished">2019-05-14 13:49:06</time>
@@ -193,14 +202,14 @@ UI 组件分为两种情况，有状态组件和无状态组件:
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2019/05/14/Javascript中的this指向/" title="Javascript中的this指向" itemprop="url">
+    <a href="/2019/05/14/js编程风格/" title="js编程风格" itemprop="url">
   
-    <h1 itemprop="name">Javascript中的this指向</h1>
+    <h1 itemprop="name">js编程风格</h1>
     
      
-           <p itemprop="description">1. 在全局环境中使用时候在全局中使用，this 就代表全局对象 Global（在浏览器中为 window，但是在严格模式下’use strict’，this 的值为 undefined）
-1document.write(this); //[object Window]
-当您在全</p>
+           <p itemprop="description">框架能够让我们跑的更快，但只有了解原生的 JS 才能让我们走的更远。
+1.单一var这条规则的意思是，把函数内部的所有变量，放到顶部声明。比如：
+123456//示例function A() &amp;#123;  var a = 1,    b = 2,    c = a + b;&amp;#</p>
         
     
     <time datetime="2019-05-14T05:49:06.732Z" itemprop="datePublished">2019-05-14 13:49:06</time>
@@ -260,20 +269,26 @@ UI 组件分为两种情况，有状态组件和无状态组件:
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2019/05/14/Css3动画/" title="Css3动画" itemprop="url">
+    <a href="/2019/05/14/IE兼容性/" title="IE 兼容性" itemprop="url">
   
-    <h1 itemprop="name">Css3动画</h1>
+    <h1 itemprop="name">IE 兼容性</h1>
     
      
-           <p itemprop="description">transition
-官方文档
+           <p itemprop="description">IE 兼容性
+仅考虑 ie8+
 
-过渡动画，定义 css 初始样式开始到结束时候中间过度时间段内的动画效果，可称之为补间动画。
-状态开始状态(动画放在这个状态里面)结束状态(最终形态)
-参数
-transition-property: 规定对哪个属性进行过度,all 为默认值
+了解浏览器支持情况
+caniuse.com
+MDN CSS Reference
+Codrops CSS Reference
+QuirksMode.org CSS
+了解浏览器市场份额
+日志分析
+百度统计、NetMarketShare
 
-可</p>
+
+
+兼容性写</p>
         
     
     <time datetime="2019-05-14T05:49:06.721Z" itemprop="datePublished">2019-05-14 13:49:06</time>
@@ -288,14 +303,14 @@ transition-property: 规定对哪个属性进行过度,all 为默认值
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2019/05/14/Javascript设计模式/" title="Javascript 设计模式" itemprop="url">
+    <a href="/2019/05/14/Javascript的继承模式/" title="Javascript的继承模式" itemprop="url">
   
-    <h1 itemprop="name">Javascript 设计模式</h1>
+    <h1 itemprop="name">Javascript的继承模式</h1>
     
      
-           <p itemprop="description">Javascript 设计模式前言当学习深入了解后，发现一些晦涩难懂的技巧与设计模式有关，记录学习日志。
-模块模式使用 jquery 的 getJSON 方法来获取 github repoList 数据列表，未加 loading …
-1&amp;lt;div id=&#34;root&#34;&amp;gt;&amp;</p>
+           <p itemprop="description">基本概念1. 获取属性的查找规则如果访问一个对象的属性,首先检查对象是否含有对应的属性,如果含有即得结果;
+如果不含有该属性, 则去其原型中查找, 如果原型中含有该属性, 既得结果;
+如果原型中依旧没有属性, 就到其原型中的原型去查找, 直到 Object.prototype。最</p>
         
     
     <time datetime="2019-05-14T05:49:06.721Z" itemprop="datePublished">2019-05-14 13:49:06</time>
